@@ -1,0 +1,26 @@
+/* Estilos base mínimos. En la Fase 3 se reemplazan por el sistema visual
+   (tokens de color, tipografía Archivo, fondo animado y vidrio). */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: system-ui, sans-serif;
+  color: #1c1633;
+  background: #f7f8fc;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
