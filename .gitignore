@@ -1,0 +1,26 @@
+# Dependencias y compilación
+node_modules
+dist
+dist-ssr
+
+# Variables de entorno (solo se sube la plantilla .env.example)
+.env
+.env.*
+!.env.example
+*.local
+
+# Vercel
+.vercel
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Editores y sistema
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.sw?
