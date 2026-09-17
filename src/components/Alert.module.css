@@ -22,3 +22,9 @@
   color: var(--success);
   background: var(--success-bg);
 }
+
+/* Aviso suave en tonos amarillo meta (contraste 6.9:1) */
+.warning {
+  color: var(--warning);
+  background: var(--warning-bg);
+}

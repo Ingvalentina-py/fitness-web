@@ -1,11 +1,14 @@
-import { CircleAlert, CircleCheck } from 'lucide-react'
+import { CircleAlert, CircleCheck, TriangleAlert } from 'lucide-react'
 import { cx } from '../lib/cx.js'
 import styles from './Alert.module.css'
 
-// Mensaje destacado. Los errores usan role="alert" para que los lectores de pantalla
-// los anuncien de inmediato; los mensajes de éxito, role="status".
+const ICONS = { error: CircleAlert, success: CircleCheck, warning: TriangleAlert }
+
+// Mensaje destacado. variant: error | success | warning (aviso suave).
+// Los errores usan role="alert" para que los lectores de pantalla los anuncien
+// de inmediato; el resto, role="status".
 export default function Alert({ variant = 'error', children }) {
-  const Icon = variant === 'error' ? CircleAlert : CircleCheck
+  const Icon = ICONS[variant]
 
   return (
     <div

@@ -5,13 +5,19 @@ import styles from './Sheet.module.css'
 // Panel modal: sube desde abajo en el celular y aparece centrado en el computador.
 // Usa <dialog> nativo, que ya trae lo difícil: atrapa el foco del teclado,
 // se cierra con Escape y deja inerte el resto de la página.
-export default function Sheet({ open, onClose, title, children }) {
+// footer: acciones que quedan fijas abajo aunque el contenido se desplace.
+export default function Sheet({ open, onClose, title, footer, children }) {
   const dialogRef = useRef(null)
   const titleId = useId()
 
   useEffect(() => {
     const dialog = dialogRef.current
-    if (open && !dialog.open) dialog.showModal()
+    if (open && !dialog.open) {
+      dialog.showModal()
+      // showModal enfoca el primer botón ("Cerrar"). Si algún campo pide el foco
+      // (data-autofocus, ej. un buscador), se le da después de abrir.
+      dialog.querySelector('[data-autofocus]')?.focus()
+    }
     if (!open && dialog.open) dialog.close()
   }, [open])
 
@@ -39,6 +45,7 @@ export default function Sheet({ open, onClose, title, children }) {
           </button>
         </header>
         {children}
+        {footer && <div className={styles.footer}>{footer}</div>}
       </div>
     </dialog>
   )

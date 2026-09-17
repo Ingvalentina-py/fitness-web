@@ -1,0 +1,15 @@
+.link {
+  display: inline-flex;
+  gap: var(--space-1);
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: var(--space-2);
+  padding-right: var(--space-3);
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

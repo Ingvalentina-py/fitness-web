@@ -3,7 +3,8 @@ import { cx } from '../lib/cx.js'
 import styles from './Field.module.css'
 
 // Campo de formulario con etiqueta, ayuda y error conectados para lectores de pantalla.
-// `as="select"` lo convierte en un desplegable (las opciones van como children).
+// `as="select"` lo convierte en un desplegable (las opciones van como children)
+// y `as="textarea"` en un texto de varias líneas.
 export default function Field({ label, hint, error, as: Control = 'input', ...controlProps }) {
   const id = useId()
   const hintId = `${id}-hint`
@@ -17,7 +18,11 @@ export default function Field({ label, hint, error, as: Control = 'input', ...co
       </label>
       <Control
         id={id}
-        className={cx(styles.control, Control === 'select' && styles.select)}
+        className={cx(
+          styles.control,
+          Control === 'select' && styles.select,
+          Control === 'textarea' && styles.textarea,
+        )}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
         {...controlProps}

@@ -41,6 +41,8 @@
   --danger-bg: #ffe3ee;
   --success: var(--color-lime-strong);
   --success-bg: #e6f8d8;
+  --warning: #6b4e00;
+  --warning-bg: #fff3c4;
 
   /* Color fijo del gimnasio. Los tipos de actividad traen su color desde la API. */
   --activity-gym: var(--color-fuchsia);

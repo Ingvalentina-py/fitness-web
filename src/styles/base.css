@@ -42,6 +42,8 @@ h3 {
   font-weight: var(--font-weight-display);
   line-height: 1.1;
   letter-spacing: -0.01em;
+  /* En pantallas muy angostas, una palabra larga puede partirse en vez de desbordar */
+  overflow-wrap: break-word;
 }
 
 button,

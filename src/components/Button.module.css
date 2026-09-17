@@ -47,6 +47,19 @@
   background: transparent;
 }
 
+/* Blanco sobre #B00D4F: contraste 6.6:1 */
+.danger {
+  color: var(--on-primary);
+  background: var(--danger);
+  box-shadow: 0 10px 22px -12px rgb(176 13 79 / 0.7);
+}
+
+.sm {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+}
+
 .md {
   font-size: var(--text-md);
 }

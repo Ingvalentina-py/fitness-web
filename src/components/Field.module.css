@@ -44,6 +44,12 @@
   background-position: right var(--space-4) center;
 }
 
+.textarea {
+  min-height: 88px;
+  padding: var(--space-3) var(--space-4);
+  resize: vertical;
+}
+
 .hint {
   font-size: var(--text-sm);
   color: var(--text-muted);

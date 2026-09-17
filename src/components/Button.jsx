@@ -1,8 +1,8 @@
 import { cx } from '../lib/cx.js'
 import styles from './Button.module.css'
 
-// variant: primary (degradado) | secondary (borde) | ghost (solo texto)
-// size: md | lg
+// variant: primary (degradado) | secondary (borde) | ghost (solo texto) | danger (acciones destructivas)
+// size: sm | md | lg
 // as: otro elemento con estilo de botón, ej. as={Link} para navegar
 export default function Button({
   as: Component = 'button',
@@ -22,7 +22,7 @@ export default function Button({
       {...defaultProps}
       {...props}
     >
-      {Icon && <Icon aria-hidden="true" size={20} strokeWidth={2.25} />}
+      {Icon && <Icon aria-hidden="true" size={size === 'sm' ? 18 : 20} strokeWidth={2.25} />}
       {children}
     </Component>
   )

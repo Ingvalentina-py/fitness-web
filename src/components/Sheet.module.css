@@ -4,6 +4,8 @@
   max-height: 88dvh;
   margin: auto auto 0;
   padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid var(--glass-border);
   border-bottom: 0;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -74,6 +76,19 @@
   background: rgb(28 22 51 / 0.06);
 }
 
+/* Acciones fijas al final del panel mientras se desplaza el contenido */
+/* Márgenes negativos: el pie ocupa todo el ancho y llega hasta el borde inferior */
+.footer {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 calc(var(--space-5) * -1) calc(var(--space-6) * -1 - env(safe-area-inset-bottom));
+  padding: var(--space-3) var(--space-5) calc(var(--space-4) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: var(--glass-bg-fallback);
+}
+
 /* En pantallas grandes: panel centrado con todas las esquinas redondeadas */
 @media (min-width: 768px) {
   .sheet {
@@ -92,6 +107,11 @@
 
   .content {
     padding: var(--space-6);
+  }
+
+  .footer {
+    margin: 0 calc(var(--space-6) * -1) calc(var(--space-6) * -1);
+    padding: var(--space-4) var(--space-6);
   }
 }
 
