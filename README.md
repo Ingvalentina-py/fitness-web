@@ -37,21 +37,47 @@ Abre http://localhost:5173.
 
 ## Variables de entorno
 
-| Variable       | Descripción                                          |
-| -------------- | ---------------------------------------------------- |
-| `VITE_API_URL` | URL base de la API, por ejemplo `http://localhost:3000/api/v1` |
+| Variable       | Valor         | Descripción                   |
+| -------------- | ------------- | ----------------------------- |
+| `VITE_API_URL` | `/api/v1`     | URL base de la API (relativa) |
 
 Las variables que empiezan por `VITE_` se incluyen en el código que descarga el navegador, así que **nunca** deben contener secretos.
+
+## Cómo se conecta con la API
+
+El frontend siempre llama a `/api/v1/...` en **su propio dominio**:
+
+- **En desarrollo**, el proxy de Vite (`vite.config.js`) reenvía `/api` a `http://localhost:3000`.
+- **En producción**, un rewrite de Vercel hará lo mismo hacia el dominio de fitness-api (Fase 10).
+
+Así el navegador ve un solo sitio y la cookie de sesión (`httpOnly`) funciona en todos los navegadores, incluido Safari en iPhone. El código nunca toca el token: la cookie viaja sola en cada petición.
+
+## Rutas
+
+| Ruta         | Acceso     | Pantalla                                              |
+| ------------ | ---------- | ----------------------------------------------------- |
+| `/ingresar`  | Sin sesión | Inicio de sesión                                      |
+| `/registro`  | Sin sesión | Crear cuenta (envía la zona horaria del dispositivo) |
+| `/`          | Con sesión | Inicio provisional (será "Hoy" en la Fase 3)          |
+| `/perfil`    | Con sesión | Nombre, preferencias, cambio de contraseña y salir    |
+| `/estado`    | Pública    | Estado de frontend, API y base de datos               |
+
+`RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
 
 ## Estructura
 
 ```
 src/
 ├── main.jsx          # Punto de entrada: monta React con sus proveedores
-├── app/              # Configuración global: rutas y cliente de TanStack Query
-├── features/         # Una carpeta por funcionalidad (status, routines, gym, progress…)
-├── lib/              # Utilidades compartidas (cliente HTTP de la API)
-└── styles/           # Estilos globales
+├── app/              # Rutas, cliente de TanStack Query y página 404
+├── components/       # Componentes reutilizables básicos (Field, Alert…); sistema de diseño en la Fase 3
+├── features/
+│   ├── auth/         # Sesión: API, hooks, guardas de rutas, inicio de sesión y registro
+│   ├── profile/      # Perfil y preferencias
+│   ├── status/       # Estado de la conexión
+│   └── today/        # Inicio (provisional)
+├── lib/              # Cliente HTTP, opciones de /meta y errores de formularios
+└── styles/           # Estilos globales básicos
 ```
 
-Organizar por **funcionalidad** (y no por tipo de archivo) mantiene juntos los componentes, hooks y estilos de cada sección. Así es fácil encontrarlos y la app puede crecer sin volverse un laberinto. Los componentes reutilizables del sistema de diseño irán en `src/components/` (Fase 3).
+Organizar por **funcionalidad** (y no por tipo de archivo) mantiene juntos los componentes, hooks y llamadas a la API de cada sección. Así es fácil encontrarlos y la app puede crecer sin volverse un laberinto.
