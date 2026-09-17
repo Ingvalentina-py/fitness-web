@@ -14,7 +14,8 @@
   display: grid;
   align-content: space-between;
   gap: var(--space-2);
-  padding: var(--space-3);
+  min-width: 0;
+  padding: var(--space-3) var(--space-2);
   border-radius: var(--radius-md);
   background: rgb(255 255 255 / 0.55);
 }
@@ -25,6 +26,9 @@
   font-size: var(--text-xs);
   font-weight: 700;
   color: var(--text-muted);
+  /* En celulares angostos, una palabra larga ("Actividades") se divide en vez de salirse */
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .statIcon {

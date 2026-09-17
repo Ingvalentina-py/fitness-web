@@ -1,13 +1,12 @@
-import { Activity, CalendarDays, Flame, Plus, Timer } from 'lucide-react'
-import { Link } from 'react-router'
+import { Activity, Flame, Plus, Timer } from 'lucide-react'
 import Button from '../../components/Button.jsx'
-import EmptyState from '../../components/EmptyState.jsx'
 import GlassCard from '../../components/GlassCard.jsx'
 import PageHeader from '../../components/PageHeader.jsx'
 import { Reveal, Stagger } from '../../components/Reveal.jsx'
 import { formatLongDate } from '../../lib/dates.js'
 import { useQuickAdd } from '../../app/layout/useQuickAdd.js'
 import { useCurrentUser } from '../auth/useAuth.js'
+import TodayPlan from './TodayPlan.jsx'
 import styles from './TodayPage.module.css'
 
 export default function TodayPage() {
@@ -46,17 +45,7 @@ export default function TodayPage() {
       </Reveal>
 
       <Reveal>
-        <EmptyState
-          icon={CalendarDays}
-          color="turquoise"
-          title="Aún no hay nada planeado para hoy"
-          description="Arma tu plan semanal en Rutinas y aquí verás qué te toca cada día."
-          action={
-            <Button as={Link} to="/rutinas" variant="secondary">
-              Ir a Rutinas
-            </Button>
-          }
-        />
+        <TodayPlan timeZone={user.preferences.timezone} />
       </Reveal>
     </Stagger>
   )
