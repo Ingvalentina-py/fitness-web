@@ -1,0 +1,93 @@
+.bar {
+  position: fixed;
+  right: var(--space-3);
+  bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
+  left: var(--space-3);
+  z-index: 10;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 16px 36px -14px rgb(28 22 51 / 0.3);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bar {
+    background: var(--glass-bg-fallback);
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  align-items: center;
+  height: var(--bottom-nav-height);
+  margin: 0;
+  padding: 0 var(--space-1);
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: var(--space-2) 0;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.link[aria-current='page'] {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.activeBackground {
+  position: absolute;
+  inset: 2px 4px;
+  z-index: -1;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-fuchsia) 18%, transparent);
+}
+
+.label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.addItem {
+  display: grid;
+  place-items: center;
+}
+
+/* El "+" sobresale de la barra para que se encuentre sin mirar */
+.addButton {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin-top: -30px;
+  border: 4px solid rgb(255 255 255 / 0.95);
+  border-radius: 50%;
+  color: var(--on-primary);
+  background: var(--primary-gradient);
+  box-shadow: 0 14px 26px -10px rgb(209 16 94 / 0.75);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.addButton:active {
+  transform: scale(0.92);
+}
+
+@media (min-width: 768px) {
+  .bar {
+    display: none;
+  }
+}

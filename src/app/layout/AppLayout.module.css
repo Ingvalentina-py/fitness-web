@@ -1,0 +1,27 @@
+.shell {
+  min-height: 100dvh;
+}
+
+.main {
+  min-width: 0;
+}
+
+/* En el celular deja espacio abajo para que la barra de pestañas no tape el contenido */
+.content {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-4)
+    calc(var(--bottom-nav-height) + var(--space-12) + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .shell {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .content {
+    padding: var(--space-12) var(--space-8);
+  }
+}
