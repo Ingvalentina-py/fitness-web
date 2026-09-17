@@ -1,0 +1,86 @@
+.form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.preview {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-end;
+}
+
+.preview > :last-child {
+  flex: 1;
+}
+
+.previewIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--tone);
+}
+
+.fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.swatches,
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.swatch {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--text);
+  background: var(--tone);
+  cursor: pointer;
+}
+
+.swatch:has(input:checked) {
+  box-shadow:
+    0 0 0 3px #ffffff,
+    0 0 0 5px var(--text);
+}
+
+.iconOption {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.8);
+  box-shadow: inset 0 0 0 1px var(--border);
+  cursor: pointer;
+}
+
+.iconOption:has(input:checked) {
+  color: var(--on-primary);
+  background: var(--primary-gradient);
+  box-shadow: none;
+}
+
+.swatch:has(input:focus-visible),
+.iconOption:has(input:focus-visible) {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}

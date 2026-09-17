@@ -1,0 +1,62 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--text-xl);
+}
+
+.days {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.day {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: center;
+  min-height: 52px;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+.day + .day {
+  border-top: 1px solid var(--border);
+}
+
+.today {
+  background: color-mix(in srgb, var(--color-yellow) 18%, transparent);
+}
+
+.dayName {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: center;
+  font-weight: 700;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* Celulares muy angostos: el nombre del día queda arriba de sus actividades */
+@media (max-width: 359px) {
+  .day {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}
