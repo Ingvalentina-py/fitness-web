@@ -68,7 +68,13 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 - **Movimiento.** Fundido rápido al cambiar de pestaña, tarjetas que aparecen escalonadas (`Stagger`/`Reveal`), píldora de la pestaña activa que se desliza (Motion `layoutId`) y panel que sube desde abajo.
 - **Reducir movimiento.** Si el sistema lo pide, `MotionConfig reducedMotion="user"` quita los desplazamientos y `base.css` detiene las animaciones CSS, incluido el fondo.
 
-**Componentes** (`src/components/`): `AnimatedBackground`, `GlassCard`, `Button`, `Field`, `SegmentedControl`, `Switch`, `Alert`, `Badge`, `Chip`, `Avatar`, `Logo`, `PageHeader`, `EmptyState`, `Sheet` (panel modal con `<dialog>` nativo), `Stagger`/`Reveal` y `PageMessage`. `icons.js` traduce los nombres de ícono que guarda la API a íconos de Lucide, incluido un ícono propio de patines.
+**Componentes** (`src/components/`):
+- **Estructura y superficies:** `AnimatedBackground`, `GlassCard`, `PageHeader`, `BackLink`, `EmptyState`, `PageMessage`, `Stagger`/`Reveal`.
+- **Botones:** `Button` (primary, secondary, ghost, danger), `IconButton`.
+- **Formularios:** `Field` (input, select, textarea), `SearchField`, `SegmentedControl`, `ChoiceChips` (una o varias opciones), `NumberStepper` (− número +), `Switch`.
+- **Mensajes y etiquetas:** `Alert` (error, éxito, aviso), `Badge`, `Chip`, `Avatar`, `Logo`.
+- **Paneles:** `Sheet` (modal con `<dialog>` nativo, con pie fijo opcional), `ActionSheet` (menú de acciones) y `ConfirmSheet` (confirmación).
+- **Íconos:** `icons.js` traduce los nombres que guarda la API a íconos de Lucide (incluido uno propio de patines) e `IconByName` los dibuja.
 
 **Guía de estilos:** en desarrollo, abre http://localhost:5173/estilos para ver colores, tipografía y componentes juntos. Esa ruta no se incluye en la versión de producción.
 
@@ -84,13 +90,26 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | ------------ | ---------- | ----------------------------------------------------- |
 | `/ingresar`  | Sin sesión | Inicio de sesión                                      |
 | `/registro`  | Sin sesión | Crear cuenta (envía la zona horaria del dispositivo)  |
-| `/`          | Con sesión | Hoy: saludo, resumen del día y lo planeado            |
-| `/rutinas`   | Con sesión | Rutinas y plan semanal (vacía hasta la Fase 4)        |
+| `/`          | Con sesión | Hoy: saludo, resumen del día y lo planeado (con aviso de piernas) |
+| `/rutinas`   | Con sesión | Plan semanal, grupos con sus rutinas y rutinas archivadas |
+| `/rutinas/nueva` | Con sesión | Crear rutina (`?grupo=<id>` elige el grupo)       |
+| `/rutinas/:routineId` | Con sesión | Editar rutina                                |
+| `/rutinas/plan` | Con sesión | Editar el plan semanal (se guarda al instante)     |
 | `/historial` | Con sesión | Calendario (vacía hasta la Fase 7)                    |
 | `/progreso`  | Con sesión | Estadísticas y récords (vacía hasta la Fase 8)        |
 | `/perfil`    | Con sesión | Nombre, preferencias, contraseña y cerrar sesión      |
+| `/perfil/ejercicios` | Con sesión | Catálogo: buscar, filtrar y crear ejercicios propios |
 | `/estado`    | Pública    | Estado de frontend, API y base de datos               |
 | `/estilos`   | Desarrollo | Guía de estilos                                       |
+
+## Rutinas
+
+- **Reordenar.** Rutinas y ejercicios se arrastran desde su manija (⋮⋮) con `Reorder` de Motion; también se puede usar "Subir"/"Bajar" en el menú de cada rutina (útil con teclado). Los grupos se reordenan desde su menú.
+- **Actualizaciones optimistas.** Al reordenar o editar el plan semanal la pantalla cambia al instante y, si la API falla, vuelve atrás (`useRoutines.js`, `useWeeklyPlan.js`).
+- **Editor de rutinas.** Series con botones −/+, rango de repeticiones, descanso y notas por ejercicio. El buscador permite elegir varios ejercicios de una vez, filtrar por músculo y equipo, o crear uno propio sin salir. Si sales con cambios sin guardar, pide confirmación (`useBlocker`).
+- **División sugerida.** Las cuentas nuevas la reciben al registrarse; si no tienes rutinas, la pantalla ofrece "Usar división sugerida".
+
+## Guardas de sesión
 
 `RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
 
@@ -107,10 +126,11 @@ src/
 ├── features/         # Una carpeta por funcionalidad
 │   ├── activities/   # Tipos de actividad
 │   ├── auth/         # Sesión, guardas de rutas, inicio de sesión y registro
+│   ├── exercises/    # Catálogo, buscador y formulario de ejercicios
 │   ├── history/      # Historial
 │   ├── profile/      # Perfil y preferencias
 │   ├── progress/     # Progreso
-│   ├── routines/     # Rutinas
+│   ├── routines/     # Grupos, rutinas, editor y plan semanal
 │   ├── status/       # Estado de la conexión
 │   ├── styleguide/   # Guía de estilos (solo desarrollo)
 │   └── today/        # Hoy
