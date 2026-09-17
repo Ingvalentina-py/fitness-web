@@ -1,0 +1,97 @@
+/* Tokens de diseño: la única fuente de colores, tipografía, espacios, sombras y movimiento.
+   Para cambiar la paleta o el estilo de toda la app, se cambia este archivo. */
+
+:root {
+  /* ── Paleta (plan, sección 7.2) ── */
+  --color-cloud: #f7f8fc;
+  --color-ink: #1c1633;
+  --color-fuchsia: #ff2e7e;
+  --color-orange: #ff6b2c;
+  --color-turquoise: #12d6c5;
+  --color-yellow: #ffc928;
+  --color-lime: #7bdc3a;
+
+  /* Variantes oscuras para TEXTO sobre fondos claros (contraste ≥ 4.8:1).
+     Los colores vivos solo llegan a 1.5–3.3:1 sobre Nube: sirven para fondos,
+     íconos decorativos y gráficas, nunca para texto. La tinta sí se lee sobre
+     cualquier color vivo (≥ 4.9:1). */
+  --color-fuchsia-strong: #d1105e;
+  --color-orange-strong: #c2410c;
+  --color-turquoise-strong: #0b7a72;
+  --color-yellow-strong: #8a6400;
+  --color-lime-strong: #3d7a12;
+
+  /* ── Roles: los componentes usan estos nombres, no la paleta directa ── */
+  --bg: var(--color-cloud);
+  /* Texto directamente sobre el fondo animado: solo --text (las manchas bajan el contraste) */
+  --text: var(--color-ink);
+  /* --text-muted y --primary-strong como texto: solo dentro de superficies de vidrio o blancas */
+  --text-muted: #5b5670;
+  --border: rgb(28 22 51 / 0.12);
+  --primary: var(--color-fuchsia);
+  --primary-strong: var(--color-fuchsia-strong);
+  --primary-gradient: linear-gradient(
+    135deg,
+    var(--color-fuchsia-strong),
+    var(--color-orange-strong)
+  );
+  --on-primary: #ffffff;
+  --focus-ring-color: rgb(209 16 94 / 0.65);
+  --danger: #b00d4f;
+  --danger-bg: #ffe3ee;
+  --success: var(--color-lime-strong);
+  --success-bg: #e6f8d8;
+
+  /* Color fijo del gimnasio. Los tipos de actividad traen su color desde la API. */
+  --activity-gym: var(--color-fuchsia);
+
+  /* ── Vidrio (glassmorphism) ── */
+  --glass-bg: rgb(255 255 255 / 0.6);
+  --glass-bg-strong: rgb(255 255 255 / 0.82);
+  /* Respaldo si el navegador no soporta backdrop-filter */
+  --glass-bg-fallback: rgb(255 255 255 / 0.94);
+  --glass-border: rgb(255 255 255 / 0.75);
+  --glass-blur: blur(18px) saturate(160%);
+  /* Sombra suave teñida de fucsia */
+  --glass-shadow: 0 12px 32px -14px rgb(209 16 94 / 0.28), 0 2px 6px rgb(28 22 51 / 0.05);
+
+  /* ── Tipografía: Archivo, una sola familia ── */
+  --font-family: 'Archivo Variable', system-ui, sans-serif;
+  --font-stretch-display: 125%; /* ancho expandido para títulos */
+  --font-weight-display: 800;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+
+  /* ── Espacios (múltiplos de 4 px) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ── Radios ── */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-pill: 999px;
+
+  /* ── Movimiento ── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+
+  /* ── Estructura ── */
+  --tap-size: 48px; /* tamaño mínimo cómodo para tocar */
+  --bottom-nav-height: 68px;
+  --sidebar-width: 264px;
+  --content-width: 720px;
+}
