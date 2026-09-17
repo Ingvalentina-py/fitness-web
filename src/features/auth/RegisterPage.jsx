@@ -1,9 +1,11 @@
 import { Link } from 'react-router'
 import Alert from '../../components/Alert.jsx'
+import Button from '../../components/Button.jsx'
 import Field from '../../components/Field.jsx'
 import { getFieldErrors } from '../../lib/formErrors.js'
 import AuthLayout from './AuthLayout.jsx'
 import { useRegister } from './useAuth.js'
+import styles from './auth.module.css'
 
 export default function RegisterPage() {
   const register = useRegister()
@@ -33,7 +35,7 @@ export default function RegisterPage() {
         </>
       }
     >
-      <form className="form" onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         {register.isError && !hasFieldErrors && (
           <Alert>{fieldErrors[''] ?? register.error.message}</Alert>
         )}
@@ -65,9 +67,9 @@ export default function RegisterPage() {
           error={fieldErrors.password}
         />
 
-        <button type="submit" className="button" disabled={register.isPending}>
+        <Button type="submit" size="lg" fullWidth disabled={register.isPending}>
           {register.isPending ? 'Creando cuenta…' : 'Crear cuenta'}
-        </button>
+        </Button>
       </form>
     </AuthLayout>
   )

@@ -1,9 +1,11 @@
 import { Link } from 'react-router'
 import Alert from '../../components/Alert.jsx'
+import Button from '../../components/Button.jsx'
 import Field from '../../components/Field.jsx'
 import { getFieldErrors } from '../../lib/formErrors.js'
 import AuthLayout from './AuthLayout.jsx'
 import { useLogin } from './useAuth.js'
+import styles from './auth.module.css'
 
 export default function LoginPage() {
   const login = useLogin()
@@ -27,7 +29,7 @@ export default function LoginPage() {
         </>
       }
     >
-      <form className="form" onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         {login.isError && !hasFieldErrors && (
           <Alert>{fieldErrors[''] ?? login.error.message}</Alert>
         )}
@@ -49,9 +51,9 @@ export default function LoginPage() {
           error={fieldErrors.password}
         />
 
-        <button type="submit" className="button" disabled={login.isPending}>
+        <Button type="submit" size="lg" fullWidth disabled={login.isPending}>
           {login.isPending ? 'Entrando…' : 'Entrar'}
-        </button>
+        </Button>
       </form>
     </AuthLayout>
   )

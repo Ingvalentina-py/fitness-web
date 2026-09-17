@@ -1,4 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router'
+import Button from '../../components/Button.jsx'
 import PageMessage from '../../components/PageMessage.jsx'
 import { useCurrentUser } from './useAuth.js'
 
@@ -16,9 +17,7 @@ export default function RequireAuth() {
     return (
       <PageMessage>
         <p>No pudimos conectar con el servidor.</p>
-        <button type="button" className="button" onClick={() => refetch()}>
-          Reintentar
-        </button>
+        <Button onClick={() => refetch()}>Reintentar</Button>
       </PageMessage>
     )
   }

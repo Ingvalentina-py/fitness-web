@@ -1,6 +1,12 @@
+import { RefreshCw } from 'lucide-react'
 import { Link } from 'react-router'
+import Button from '../../components/Button.jsx'
+import GlassCard from '../../components/GlassCard.jsx'
+import PageHeader from '../../components/PageHeader.jsx'
+import { Reveal, Stagger } from '../../components/Reveal.jsx'
+import { cx } from '../../lib/cx.js'
 import { useApiHealth } from './useApiHealth.js'
-import './StatusPage.css'
+import styles from './StatusPage.module.css'
 
 const STATE_LABELS = {
   checking: 'Comprobando…',
@@ -10,7 +16,7 @@ const STATE_LABELS = {
 }
 
 const HINTS = {
-  api: 'Inicia fitness-api con "npm run dev" y revisa VITE_API_URL en el .env de fitness-web.',
+  api: 'Inicia fitness-api con "npm run dev" en su carpeta.',
   database:
     'Revisa MONGODB_URI en el .env de fitness-api y el acceso de red (Network Access) en Atlas.',
 }
@@ -18,62 +24,70 @@ const HINTS = {
 // Traduce la respuesta de /health al estado de cada pieza.
 function getStates({ isPending, data, error }) {
   if (isPending) return { api: 'checking', database: 'checking' }
-  if (error?.status === 0) return { api: 'down', database: 'unknown' }
+  if (error?.status === 0 || error?.status === 502 || error?.status === 504) {
+    // 502/504: el proxy de Vite no encontró la API
+    return { api: 'down', database: 'unknown' }
+  }
 
   // Si la base de datos falla, la API responde 503 y el detalle viene en error.data
   const health = data ?? error?.data
   return { api: 'up', database: health?.database === 'connected' ? 'up' : 'down' }
 }
 
-// Pantalla temporal de la Fase 0: confirma que frontend, API y base de datos se comunican.
+// Diagnóstico público: confirma que frontend, API y base de datos se comunican.
 export default function StatusPage() {
   const { data, error, isPending, isFetching, refetch } = useApiHealth()
   const states = getStates({ isPending, data, error })
 
   return (
-    <main className="status-page">
-      <header>
-        <p className="status-page__eyebrow">Fase 0 · Preparación</p>
-        <h1 className="status-page__title">App Fitness</h1>
-        <p>Comprobamos que el frontend, la API y la base de datos se comunican.</p>
-      </header>
+    <main className={styles.page}>
+      <Stagger className={styles.column}>
+        <Reveal>
+          <PageHeader
+            documentTitle="Estado"
+            eyebrow="Diagnóstico"
+            title="Estado de la conexión"
+            subtitle="Comprobamos que el frontend, la API y la base de datos se comunican."
+          />
+        </Reveal>
 
-      <ul className="status-list" aria-live="polite">
-        <StatusItem label="Frontend (React + Vite)" state="up" />
-        <StatusItem
-          label="API (Express)"
-          state={states.api}
-          hint={states.api === 'down' ? HINTS.api : null}
-        />
-        <StatusItem
-          label="Base de datos (MongoDB Atlas)"
-          state={states.database}
-          hint={states.database === 'down' ? HINTS.database : null}
-        />
-      </ul>
+        <Reveal>
+          <GlassCard>
+            <ul className={styles.list} aria-live="polite">
+              <StatusItem label="Frontend (React + Vite)" state="up" />
+              <StatusItem
+                label="API (Express)"
+                state={states.api}
+                hint={states.api === 'down' ? HINTS.api : null}
+              />
+              <StatusItem
+                label="Base de datos (MongoDB Atlas)"
+                state={states.database}
+                hint={states.database === 'down' ? HINTS.database : null}
+              />
+            </ul>
 
-      <button
-        type="button"
-        className="status-page__button"
-        onClick={() => refetch()}
-        disabled={isFetching}
-      >
-        {isFetching ? 'Comprobando…' : 'Comprobar de nuevo'}
-      </button>
-
-      <Link to="/">Volver al inicio</Link>
+            <Button icon={RefreshCw} onClick={() => refetch()} disabled={isFetching}>
+              {isFetching ? 'Comprobando…' : 'Comprobar de nuevo'}
+            </Button>
+            <Link className={styles.back} to="/">
+              Volver al inicio
+            </Link>
+          </GlassCard>
+        </Reveal>
+      </Stagger>
     </main>
   )
 }
 
 function StatusItem({ label, state, hint }) {
   return (
-    <li className="status-item">
-      <span className={`status-item__dot status-item__dot--${state}`} aria-hidden="true" />
+    <li className={styles.item}>
+      <span className={cx(styles.dot, styles[state])} aria-hidden="true" />
       <div>
-        <p className="status-item__label">{label}</p>
-        <p className="status-item__state">{STATE_LABELS[state]}</p>
-        {hint && <p className="status-item__hint">{hint}</p>}
+        <p className={styles.label}>{label}</p>
+        <p className={styles.state}>{STATE_LABELS[state]}</p>
+        {hint && <p className={styles.hint}>{hint}</p>}
       </div>
     </li>
   )

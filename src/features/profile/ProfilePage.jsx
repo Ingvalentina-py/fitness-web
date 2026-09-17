@@ -1,33 +1,48 @@
-import { Link, useNavigate } from 'react-router'
+import { ChevronRight, KeyRound, ListChecks, LogOut, Palette, Quote, Save } from 'lucide-react'
+import { useNavigate } from 'react-router'
 import Alert from '../../components/Alert.jsx'
+import Badge from '../../components/Badge.jsx'
+import Button from '../../components/Button.jsx'
 import Field from '../../components/Field.jsx'
-import PageMessage from '../../components/PageMessage.jsx'
+import GlassCard from '../../components/GlassCard.jsx'
+import PageHeader from '../../components/PageHeader.jsx'
+import { Reveal, Stagger } from '../../components/Reveal.jsx'
+import SegmentedControl from '../../components/SegmentedControl.jsx'
+import Switch from '../../components/Switch.jsx'
 import { getFieldErrors } from '../../lib/formErrors.js'
 import { useMeta } from '../../lib/useMeta.js'
 import { useCurrentUser, useLogout } from '../auth/useAuth.js'
 import { useChangePassword, useUpdateProfile } from './useProfile.js'
+import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {
   const { data: user } = useCurrentUser()
   const { data: meta, isPending, isError } = useMeta()
 
-  if (isPending) return <PageMessage>Cargando…</PageMessage>
-  if (isError) return <PageMessage>No pudimos cargar las opciones. Recarga la página.</PageMessage>
-
   return (
-    <main className="page">
-      <header>
-        <Link to="/" className="back-link">
-          ← Volver
-        </Link>
-        <h1 className="page-title">Tu perfil</h1>
-        <p className="page-subtitle">{user.email}</p>
-      </header>
+    <Stagger>
+      <Reveal>
+        <PageHeader title="Tu perfil" subtitle={user.email} />
+      </Reveal>
 
-      <ProfileForm user={user} meta={meta} />
-      <PasswordForm />
-      <SessionSection />
-    </main>
+      <Reveal>
+        {isPending && <GlassCard>Cargando opciones…</GlassCard>}
+        {isError && <Alert>No pudimos cargar las opciones. Recarga la página.</Alert>}
+        {meta && <ProfileForm user={user} meta={meta} />}
+      </Reveal>
+
+      <Reveal>
+        <PasswordForm />
+      </Reveal>
+
+      <Reveal>
+        <CustomizationSection />
+      </Reveal>
+
+      <Reveal>
+        <SessionSection />
+      </Reveal>
+    </Stagger>
   )
 }
 
@@ -58,12 +73,14 @@ function ProfileForm({ user, meta }) {
   }
 
   return (
-    <section className="card">
-      <h2 className="card__title">Datos y preferencias</h2>
+    <GlassCard aria-labelledby="profile-preferences-title">
+      <h2 id="profile-preferences-title" className={styles.sectionTitle}>
+        Datos y preferencias
+      </h2>
 
       {/* Al editar cualquier campo se oculta el aviso "Cambios guardados" anterior */}
       <form
-        className="form"
+        className={styles.form}
         onSubmit={handleSubmit}
         onChange={() => updateProfile.isSuccess && updateProfile.reset()}
       >
@@ -80,22 +97,12 @@ function ProfileForm({ user, meta }) {
           error={fieldErrors.name}
         />
 
-        <fieldset className="fieldset">
-          <legend className="field__label">Unidad de peso por defecto</legend>
-          <div className="choice-group">
-            {meta.weightUnits.map((unit) => (
-              <label key={unit.value} className="choice">
-                <input
-                  type="radio"
-                  name="weightUnit"
-                  value={unit.value}
-                  defaultChecked={user.preferences.weightUnit === unit.value}
-                />
-                {unit.label}
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <SegmentedControl
+          legend="Unidad de peso por defecto"
+          name="weightUnit"
+          options={meta.weightUnits}
+          defaultValue={user.preferences.weightUnit}
+        />
 
         <Field
           as="select"
@@ -115,7 +122,7 @@ function ProfileForm({ user, meta }) {
           label="Zona horaria"
           name="timezone"
           defaultValue={user.preferences.timezone}
-          hint={`La de este dispositivo es ${deviceTimeZone}.`}
+          hint={`La de este dispositivo es ${deviceTimeZone.replaceAll('_', ' ')}.`}
           error={fieldErrors['preferences.timezone']}
         >
           {getTimeZones(user.preferences.timezone).map((zone) => (
@@ -125,20 +132,18 @@ function ProfileForm({ user, meta }) {
           ))}
         </Field>
 
-        <label className="choice">
-          <input
-            type="checkbox"
-            name="voicePhrases"
-            defaultChecked={user.preferences.voicePhrases}
-          />
-          Leer una frase motivacional en voz alta al terminar una sesión
-        </label>
+        <Switch
+          name="voicePhrases"
+          defaultChecked={user.preferences.voicePhrases}
+          label="Frases por voz"
+          description="Escucha una frase motivacional al terminar una sesión."
+        />
 
-        <button type="submit" className="button" disabled={updateProfile.isPending}>
+        <Button type="submit" icon={Save} disabled={updateProfile.isPending}>
           {updateProfile.isPending ? 'Guardando…' : 'Guardar cambios'}
-        </button>
+        </Button>
       </form>
-    </section>
+    </GlassCard>
   )
 }
 
@@ -159,10 +164,12 @@ function PasswordForm() {
   }
 
   return (
-    <section className="card">
-      <h2 className="card__title">Cambiar contraseña</h2>
+    <GlassCard aria-labelledby="profile-password-title">
+      <h2 id="profile-password-title" className={styles.sectionTitle}>
+        Cambiar contraseña
+      </h2>
 
-      <form className="form" onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         {changePassword.isSuccess && (
           <Alert variant="success">
             Contraseña actualizada. Se cerraron las sesiones de tus otros dispositivos.
@@ -191,11 +198,64 @@ function PasswordForm() {
           error={fieldErrors.newPassword}
         />
 
-        <button type="submit" className="button" disabled={changePassword.isPending}>
+        <Button
+          type="submit"
+          variant="secondary"
+          icon={KeyRound}
+          disabled={changePassword.isPending}
+        >
           {changePassword.isPending ? 'Cambiando…' : 'Cambiar contraseña'}
-        </button>
+        </Button>
       </form>
-    </section>
+    </GlassCard>
+  )
+}
+
+// Secciones del perfil que llegan en próximas fases
+const CUSTOMIZATION_ITEMS = [
+  {
+    icon: ListChecks,
+    tone: 'var(--color-fuchsia)',
+    title: 'Catálogo de ejercicios',
+    description: 'Crea y edita tus propios ejercicios.',
+  },
+  {
+    icon: Palette,
+    tone: 'var(--color-turquoise)',
+    title: 'Tipos de actividad',
+    description: 'Colores e íconos de tus actividades.',
+  },
+  {
+    icon: Quote,
+    tone: 'var(--color-yellow)',
+    title: 'Mis frases',
+    description: 'Tus frases motivacionales.',
+  },
+]
+
+function CustomizationSection() {
+  return (
+    <GlassCard aria-labelledby="profile-customization-title">
+      <h2 id="profile-customization-title" className={styles.sectionTitle}>
+        Personalización
+      </h2>
+
+      <ul className={styles.rows}>
+        {CUSTOMIZATION_ITEMS.map(({ icon: Icon, tone, title, description }) => (
+          <li key={title} className={styles.row}>
+            <span className={styles.rowIcon} style={{ '--tone': tone }} aria-hidden="true">
+              <Icon size={20} strokeWidth={2.25} />
+            </span>
+            <span className={styles.rowText}>
+              <span className={styles.rowTitle}>{title}</span>
+              <span className={styles.rowDescription}>{description}</span>
+            </span>
+            <Badge>Pronto</Badge>
+            <ChevronRight className={styles.chevron} size={20} aria-hidden="true" />
+          </li>
+        ))}
+      </ul>
+    </GlassCard>
   )
 }
 
@@ -209,16 +269,14 @@ function SessionSection() {
   }
 
   return (
-    <section className="card">
-      <h2 className="card__title">Sesión</h2>
-      <button
-        type="button"
-        className="button button--secondary"
-        onClick={handleLogout}
-        disabled={logout.isPending}
-      >
-        {logout.isPending ? 'Cerrando sesión…' : 'Cerrar sesión'}
-      </button>
-    </section>
+    <Button
+      variant="secondary"
+      icon={LogOut}
+      fullWidth
+      onClick={handleLogout}
+      disabled={logout.isPending}
+    >
+      {logout.isPending ? 'Cerrando sesión…' : 'Cerrar sesión'}
+    </Button>
   )
 }
