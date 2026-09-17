@@ -1,5 +1,5 @@
 import { ChevronRight, KeyRound, ListChecks, LogOut, Palette, Quote, Save } from 'lucide-react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import Alert from '../../components/Alert.jsx'
 import Badge from '../../components/Badge.jsx'
 import Button from '../../components/Button.jsx'
@@ -211,13 +211,14 @@ function PasswordForm() {
   )
 }
 
-// Secciones del perfil que llegan en próximas fases
+// Secciones de personalización. Las que no tienen `to` llegan en próximas fases.
 const CUSTOMIZATION_ITEMS = [
   {
     icon: ListChecks,
     tone: 'var(--color-fuchsia)',
     title: 'Catálogo de ejercicios',
-    description: 'Crea y edita tus propios ejercicios.',
+    description: 'Busca y crea tus propios ejercicios.',
+    to: '/perfil/ejercicios',
   },
   {
     icon: Palette,
@@ -241,19 +242,33 @@ function CustomizationSection() {
       </h2>
 
       <ul className={styles.rows}>
-        {CUSTOMIZATION_ITEMS.map(({ icon: Icon, tone, title, description }) => (
-          <li key={title} className={styles.row}>
-            <span className={styles.rowIcon} style={{ '--tone': tone }} aria-hidden="true">
-              <Icon size={20} strokeWidth={2.25} />
-            </span>
-            <span className={styles.rowText}>
-              <span className={styles.rowTitle}>{title}</span>
-              <span className={styles.rowDescription}>{description}</span>
-            </span>
-            <Badge>Pronto</Badge>
-            <ChevronRight className={styles.chevron} size={20} aria-hidden="true" />
-          </li>
-        ))}
+        {CUSTOMIZATION_ITEMS.map(({ icon: Icon, tone, title, description, to }) => {
+          const content = (
+            <>
+              <span className={styles.rowIcon} style={{ '--tone': tone }} aria-hidden="true">
+                <Icon size={20} strokeWidth={2.25} />
+              </span>
+              <span className={styles.rowText}>
+                <span className={styles.rowTitle}>{title}</span>
+                <span className={styles.rowDescription}>{description}</span>
+              </span>
+              {!to && <Badge>Pronto</Badge>}
+              <ChevronRight className={styles.chevron} size={20} aria-hidden="true" />
+            </>
+          )
+
+          return (
+            <li key={title} className={styles.row}>
+              {to ? (
+                <Link to={to} className={styles.rowContent}>
+                  {content}
+                </Link>
+              ) : (
+                <div className={styles.rowContent}>{content}</div>
+              )}
+            </li>
+          )
+        })}
       </ul>
     </GlassCard>
   )

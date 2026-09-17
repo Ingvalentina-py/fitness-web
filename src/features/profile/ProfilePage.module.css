@@ -14,16 +14,23 @@
   list-style: none;
 }
 
-.row {
+.row + .row {
+  border-top: 1px solid var(--border);
+}
+
+.rowContent {
   display: flex;
   gap: var(--space-3);
   align-items: center;
   min-height: 64px;
   padding: var(--space-2) 0;
+  font-weight: inherit;
+  color: var(--text);
+  text-decoration: none;
 }
 
-.row + .row {
-  border-top: 1px solid var(--border);
+a.rowContent:hover .rowTitle {
+  text-decoration: underline;
 }
 
 .rowIcon {
