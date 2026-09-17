@@ -17,10 +17,195 @@ body {
 }
 
 h1,
+h2,
 p {
   margin: 0;
 }
 
-button {
+button,
+input,
+select {
   font: inherit;
+}
+
+a {
+  font-weight: 600;
+  color: #d1105e;
+}
+
+/* ── Páginas ── */
+
+.page {
+  display: grid;
+  gap: 24px;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+.page--centered {
+  min-height: 100dvh;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d1105e;
+}
+
+.page-title {
+  margin: 4px 0 8px;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.page-subtitle {
+  color: #5b5670;
+}
+
+.page-footer {
+  text-align: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+/* ── Tarjetas ── */
+
+.card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgb(28 22 51 / 0.08);
+}
+
+.card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.link-list {
+  gap: 12px;
+}
+
+/* ── Formularios ── */
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.field__input {
+  min-height: 48px;
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid #cfcbe0;
+  border-radius: 12px;
+  color: inherit;
+  background: #ffffff;
+}
+
+.field__input:focus-visible {
+  border-color: #d1105e;
+  outline: 3px solid rgb(255 46 126 / 0.3);
+}
+
+.field__input[aria-invalid='true'] {
+  border-color: #b00d4f;
+}
+
+.field__hint {
+  font-size: 0.875rem;
+  color: #5b5670;
+}
+
+.field__error {
+  font-size: 0.875rem;
+  color: #b00d4f;
+}
+
+.fieldset {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choice-group {
+  display: flex;
+  gap: 24px;
+}
+
+.choice {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+}
+
+.choice input {
+  width: 20px;
+  height: 20px;
+  accent-color: #d1105e;
+}
+
+/* ── Botones y avisos ── */
+
+.button {
+  min-height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #d1105e;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.button--secondary {
+  color: #d1105e;
+  background: transparent;
+  box-shadow: inset 0 0 0 2px #d1105e;
+}
+
+.alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+}
+
+.alert--error {
+  color: #9b0b45;
+  background: #ffe3ee;
+}
+
+.alert--success {
+  color: #2f6b0c;
+  background: #e6f8d8;
 }
