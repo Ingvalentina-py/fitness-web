@@ -1,24 +1,77 @@
+import { Activity, CalendarDays, Flame, Plus, Timer } from 'lucide-react'
 import { Link } from 'react-router'
+import Button from '../../components/Button.jsx'
+import EmptyState from '../../components/EmptyState.jsx'
+import GlassCard from '../../components/GlassCard.jsx'
+import PageHeader from '../../components/PageHeader.jsx'
+import { Reveal, Stagger } from '../../components/Reveal.jsx'
+import { formatLongDate } from '../../lib/dates.js'
+import { useQuickAdd } from '../../app/layout/useQuickAdd.js'
 import { useCurrentUser } from '../auth/useAuth.js'
+import styles from './TodayPage.module.css'
 
-// Pantalla provisional. En la Fase 3 se convierte en "Hoy", con navegación y diseño.
 export default function TodayPage() {
   const { data: user } = useCurrentUser()
+  const openQuickAdd = useQuickAdd()
+  const firstName = user.name.split(' ')[0]
 
   return (
-    <main className="page">
-      <header>
-        <p className="eyebrow">Fase 2 · Autenticación</p>
-        <h1 className="page-title">Hola, {user.name}</h1>
-        <p className="page-subtitle">
-          Aquí estará la pantalla <strong>Hoy</strong> con el resumen de tu día.
-        </p>
-      </header>
+    <Stagger>
+      <Reveal>
+        <PageHeader
+          documentTitle="Hoy"
+          eyebrow={formatLongDate(new Date(), user.preferences.timezone)}
+          title={`Hola, ${firstName}`}
+          subtitle="Hoy suma. ¿Qué vas a mover?"
+        />
+      </Reveal>
 
-      <nav className="card link-list" aria-label="Accesos">
-        <Link to="/perfil">Tu perfil y preferencias</Link>
-        <Link to="/estado">Estado de la conexión</Link>
-      </nav>
-    </main>
+      <Reveal>
+        <GlassCard aria-labelledby="today-summary-title">
+          <h2 id="today-summary-title" className={styles.sectionTitle}>
+            Tu día
+          </h2>
+
+          {/* Valores en cero hasta que existan registros (Fases 5 a 8) */}
+          <dl className={styles.stats}>
+            <Stat icon={Activity} tone="var(--color-fuchsia)" label="Actividades" value={0} />
+            <Stat icon={Timer} tone="var(--color-turquoise)" label="Minutos" value={0} />
+            <Stat icon={Flame} tone="var(--color-yellow)" label="Días de racha" value={0} />
+          </dl>
+
+          <Button icon={Plus} size="lg" fullWidth onClick={openQuickAdd}>
+            Registrar actividad
+          </Button>
+        </GlassCard>
+      </Reveal>
+
+      <Reveal>
+        <EmptyState
+          icon={CalendarDays}
+          color="turquoise"
+          title="Aún no hay nada planeado para hoy"
+          description="Arma tu plan semanal en Rutinas y aquí verás qué te toca cada día."
+          action={
+            <Button as={Link} to="/rutinas" variant="secondary">
+              Ir a Rutinas
+            </Button>
+          }
+        />
+      </Reveal>
+    </Stagger>
+  )
+}
+
+function Stat({ icon: Icon, tone, label, value }) {
+  return (
+    <div className={styles.stat}>
+      <dt className={styles.statLabel}>
+        <span className={styles.statIcon} style={{ '--tone': tone }} aria-hidden="true">
+          <Icon size={16} strokeWidth={2.5} />
+        </span>
+        {label}
+      </dt>
+      <dd className={`${styles.statValue} num`}>{value}</dd>
+    </div>
   )
 }

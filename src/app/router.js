@@ -3,14 +3,26 @@ import GuestOnly from '../features/auth/GuestOnly.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
 import RegisterPage from '../features/auth/RegisterPage.jsx'
 import RequireAuth from '../features/auth/RequireAuth.jsx'
+import HistoryPage from '../features/history/HistoryPage.jsx'
 import ProfilePage from '../features/profile/ProfilePage.jsx'
+import ProgressPage from '../features/progress/ProgressPage.jsx'
+import RoutinesPage from '../features/routines/RoutinesPage.jsx'
 import StatusPage from '../features/status/StatusPage.jsx'
 import TodayPage from '../features/today/TodayPage.jsx'
+import AppLayout from './layout/AppLayout.jsx'
 import NotFoundPage from './NotFoundPage.jsx'
 
-// Las rutas sin `path` son "envoltorios": deciden si se muestran sus rutas hijas.
+// Las rutas sin `path` son "envoltorios": deciden si y cómo se muestran sus rutas hijas.
 export const router = createBrowserRouter([
   { path: '/estado', Component: StatusPage },
+
+  // Guía de estilos: solo en desarrollo. En producción esta ruta ni siquiera se compila.
+  import.meta.env.DEV && {
+    path: '/estilos',
+    lazy: async () => ({
+      Component: (await import('../features/styleguide/StyleGuidePage.jsx')).default,
+    }),
+  },
 
   // Solo sin sesión
   {
@@ -21,14 +33,22 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // Solo con sesión. En la Fase 3 se agregan las pestañas (Hoy, Rutinas, Historial…)
+  // Solo con sesión, dentro de la estructura con navegación
   {
     Component: RequireAuth,
     children: [
-      { path: '/', Component: TodayPage },
-      { path: '/perfil', Component: ProfilePage },
+      {
+        Component: AppLayout,
+        children: [
+          { path: '/', Component: TodayPage },
+          { path: '/rutinas', Component: RoutinesPage },
+          { path: '/historial', Component: HistoryPage },
+          { path: '/progreso', Component: ProgressPage },
+          { path: '/perfil', Component: ProfilePage },
+        ],
+      },
     ],
   },
 
   { path: '*', Component: NotFoundPage },
-])
+].filter(Boolean))
