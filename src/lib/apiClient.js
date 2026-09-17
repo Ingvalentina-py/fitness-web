@@ -6,11 +6,14 @@ if (!API_URL) {
 
 // Error con el código HTTP y el cuerpo de la respuesta, para decidir qué mostrar en pantalla.
 // status 0 significa que no hubo respuesta (servidor apagado, sin internet o bloqueo de CORS).
+// code y details vienen del formato de error de la API: { error: { code, message, details } }
 export class ApiError extends Error {
-  constructor(message, { status, data } = {}) {
+  constructor(message, { status, code, details, data } = {}) {
     super(message)
     this.name = 'ApiError'
     this.status = status
+    this.code = code
+    this.details = details
     this.data = data
   }
 }
@@ -32,8 +35,10 @@ export async function apiFetch(path, { body, headers, ...options } = {}) {
   const data = await response.json().catch(() => null)
 
   if (!response.ok) {
-    throw new ApiError(data?.message ?? `Error ${response.status}`, {
+    throw new ApiError(data?.error?.message ?? `Error ${response.status}`, {
       status: response.status,
+      code: data?.error?.code,
+      details: data?.error?.details,
       data,
     })
   }
