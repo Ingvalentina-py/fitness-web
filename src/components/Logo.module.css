@@ -1,0 +1,18 @@
+.logo {
+  display: inline-flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.mark {
+  flex-shrink: 0;
+  filter: drop-shadow(0 6px 12px rgb(255 46 126 / 0.35));
+}
+
+.name {
+  font-size: var(--text-lg);
+  font-stretch: var(--font-stretch-display);
+  font-weight: var(--font-weight-display);
+  letter-spacing: -0.01em;
+  color: var(--text);
+}

@@ -1,0 +1,16 @@
+/* Tinta sobre fucsia/naranja vivos: contraste ≥ 4.9:1 */
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  border: 2px solid rgb(255 255 255 / 0.9);
+  border-radius: 50%;
+  font-size: calc(var(--size) * 0.45);
+  font-stretch: var(--font-stretch-display);
+  font-weight: var(--font-weight-display);
+  color: var(--text);
+  background: linear-gradient(135deg, var(--color-fuchsia), var(--color-orange));
+  box-shadow: 0 6px 14px -6px rgb(255 46 126 / 0.7);
+}

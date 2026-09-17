@@ -1,0 +1,60 @@
+.empty {
+  justify-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+/* Ícono en tinta sobre color vivo (contraste ≥ 4.9:1) con un brillo del mismo color */
+.icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: var(--space-2);
+  border-radius: 24px;
+  color: var(--text);
+  background: linear-gradient(145deg, var(--tone), color-mix(in srgb, var(--tone) 55%, white));
+  box-shadow: 0 14px 28px -12px var(--tone);
+}
+
+.fuchsia {
+  --tone: var(--color-fuchsia);
+}
+
+.orange {
+  --tone: var(--color-orange);
+}
+
+.turquoise {
+  --tone: var(--color-turquoise);
+}
+
+.yellow {
+  --tone: var(--color-yellow);
+}
+
+.lime {
+  --tone: var(--color-lime);
+}
+
+.title {
+  font-size: var(--text-xl);
+}
+
+.description {
+  max-width: 36ch;
+  color: var(--text-muted);
+}
+
+.action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.note {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}

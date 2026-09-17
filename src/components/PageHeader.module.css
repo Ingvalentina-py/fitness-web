@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.text {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* Va sobre el fondo animado: solo color --text para mantener el contraste */
+.eyebrow {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-gradient);
+}
+
+.title {
+  font-size: var(--text-3xl);
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--text);
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.75rem;
+  }
+}

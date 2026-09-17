@@ -1,0 +1,24 @@
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-4);
+}
+
+.card {
+  justify-items: center;
+  min-width: min(320px, 100%);
+  text-align: center;
+}
+
+/* Late suavemente mientras carga */
+.logo {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(0.92);
+    opacity: 0.7;
+  }
+}

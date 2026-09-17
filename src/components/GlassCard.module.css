@@ -1,0 +1,29 @@
+.card {
+  display: grid;
+  gap: var(--space-4);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Respaldo: navegadores sin backdrop-filter usan un fondo casi opaco */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card {
+    background: var(--glass-bg-fallback);
+  }
+}
+
+.sm {
+  padding: var(--space-4);
+}
+
+.md {
+  padding: var(--space-5);
+}
+
+.lg {
+  padding: var(--space-6);
+}

@@ -1,8 +1,9 @@
 import { useId } from 'react'
+import { cx } from '../lib/cx.js'
+import styles from './Field.module.css'
 
 // Campo de formulario con etiqueta, ayuda y error conectados para lectores de pantalla.
 // `as="select"` lo convierte en un desplegable (las opciones van como children).
-// Componente básico: en la Fase 3 pasa al sistema de diseño.
 export default function Field({ label, hint, error, as: Control = 'input', ...controlProps }) {
   const id = useId()
   const hintId = `${id}-hint`
@@ -10,24 +11,24 @@ export default function Field({ label, hint, error, as: Control = 'input', ...co
   const describedBy = [hint && hintId, error && errorId].filter(Boolean).join(' ') || undefined
 
   return (
-    <div className="field">
-      <label className="field__label" htmlFor={id}>
+    <div className={styles.field}>
+      <label className={styles.label} htmlFor={id}>
         {label}
       </label>
       <Control
         id={id}
-        className="field__input"
+        className={cx(styles.control, Control === 'select' && styles.select)}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
         {...controlProps}
       />
       {hint && (
-        <p id={hintId} className="field__hint">
+        <p id={hintId} className={styles.hint}>
           {hint}
         </p>
       )}
       {error && (
-        <p id={errorId} className="field__error">
+        <p id={errorId} className={styles.error}>
           {error}
         </p>
       )}

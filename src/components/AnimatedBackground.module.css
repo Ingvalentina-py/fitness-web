@@ -1,0 +1,71 @@
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  animation: drift-a 32s ease-in-out infinite alternate;
+}
+
+.fuchsia {
+  top: -32vmax;
+  left: -26vmax;
+  width: 78vmax;
+  height: 78vmax;
+  background: radial-gradient(closest-side, rgb(255 46 126 / 0.48), rgb(255 46 126 / 0));
+}
+
+.orange {
+  top: 18vh;
+  right: -34vmax;
+  width: 64vmax;
+  height: 64vmax;
+  background: radial-gradient(closest-side, rgb(255 107 44 / 0.4), rgb(255 107 44 / 0));
+  animation-name: drift-b;
+  animation-duration: 38s;
+}
+
+.turquoise {
+  bottom: -38vmax;
+  left: -18vmax;
+  width: 72vmax;
+  height: 72vmax;
+  background: radial-gradient(closest-side, rgb(18 214 197 / 0.4), rgb(18 214 197 / 0));
+  animation-name: drift-c;
+  animation-duration: 44s;
+}
+
+.yellow {
+  right: -14vmax;
+  bottom: -12vmax;
+  width: 46vmax;
+  height: 46vmax;
+  background: radial-gradient(closest-side, rgb(255 201 40 / 0.36), rgb(255 201 40 / 0));
+  animation-duration: 35s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate3d(14vmax, 10vmax, 0) scale(1.12);
+  }
+}
+
+@keyframes drift-b {
+  to {
+    transform: translate3d(-16vmax, 14vmax, 0) scale(0.9);
+  }
+}
+
+@keyframes drift-c {
+  to {
+    transform: translate3d(18vmax, -12vmax, 0) scale(1.15);
+  }
+}

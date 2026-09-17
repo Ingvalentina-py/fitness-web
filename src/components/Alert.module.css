@@ -1,0 +1,24 @@
+.alert {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.error {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.success {
+  color: var(--success);
+  background: var(--success-bg);
+}

@@ -1,0 +1,57 @@
+.fieldset {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.segments {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: rgb(28 22 51 / 0.06);
+}
+
+.segment {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  min-height: 44px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base);
+}
+
+/* El radio real queda invisible pero sigue siendo enfocable con el teclado */
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segment:has(.input:checked) {
+  color: var(--on-primary);
+  background: var(--primary-gradient);
+  box-shadow: 0 6px 14px -8px rgb(209 16 94 / 0.8);
+}
+
+.segment:has(.input:focus-visible) {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}

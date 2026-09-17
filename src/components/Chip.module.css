@@ -1,0 +1,23 @@
+.chip {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1);
+  border: 1px solid color-mix(in srgb, var(--chip-color) 45%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--chip-color) 14%, white);
+}
+
+/* Ícono en tinta sobre el color del tipo (contraste ≥ 4.6:1 con la paleta) */
+.dot {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: var(--text);
+  background: var(--chip-color);
+}

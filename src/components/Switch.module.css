@@ -1,0 +1,58 @@
+.row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--tap-size);
+  cursor: pointer;
+}
+
+.text {
+  display: grid;
+  gap: 2px;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.description {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 52px;
+  height: 32px;
+  margin: 0;
+  border-radius: var(--radius-pill);
+  /* Apagado con contraste ≥ 3:1 frente al vidrio, para que se note el estado */
+  background: rgb(28 22 51 / 0.5);
+  appearance: none;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-out);
+}
+
+/* La "perilla" */
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgb(28 22 51 / 0.25);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.switch:checked {
+  background: var(--primary-gradient);
+}
+
+.switch:checked::after {
+  transform: translateX(20px);
+}
