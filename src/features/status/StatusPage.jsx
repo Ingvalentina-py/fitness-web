@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { useApiHealth } from './useApiHealth.js'
 import './StatusPage.css'
 
@@ -59,6 +60,8 @@ export default function StatusPage() {
       >
         {isFetching ? 'Comprobando…' : 'Comprobar de nuevo'}
       </button>
+
+      <Link to="/">Volver al inicio</Link>
     </main>
   )
 }
