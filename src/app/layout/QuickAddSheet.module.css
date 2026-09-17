@@ -36,7 +36,7 @@
 
 .optionTitle {
   font-size: var(--text-lg);
-  font-stretch: 112%;
+  font-stretch: var(--font-stretch-display);
   font-weight: 800;
 }
 

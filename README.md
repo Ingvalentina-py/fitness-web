@@ -62,7 +62,7 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 
 - **Tokens** (`src/styles/tokens.css`): paleta, roles de color, vidrio, tipografía, espacios, radios y movimiento. Cambiar la paleta es cambiar ese archivo.
 - **Contraste.** Los colores vivos solo llegan a 1.5–3.3:1 sobre el fondo, así que se usan para fondos, íconos y gráficas. Para texto se usa su variante `-strong` (≥ 4.8:1). La tinta sí se lee sobre cualquier color vivo (≥ 4.9:1). Sobre el fondo animado, el texto va siempre en `--text`.
-- **Tipografía.** Archivo: títulos en ancho expandido (`font-stretch: 125%`) y peso 800, texto en ancho normal. Los números usan la clase `num` (cifras tabulares).
+- **Tipografía.** Archivo: títulos con ancho moderadamente expandido (`font-stretch: 110%`) y peso 800, texto en ancho normal. Los números usan la clase `num` (cifras tabulares).
 - **Vidrio.** `GlassCard`: blanco al 60 %, `blur(18px) saturate(160%)`, borde blanco fino y sombra teñida de fucsia, con fondo casi opaco si el navegador no soporta `backdrop-filter`. No se anidan capas desenfocadas.
 - **Fondo animado.** `AnimatedBackground`: 4 manchas con degradado radial (sin `filter: blur`, más liviano en el celular) que solo animan `transform`.
 - **Movimiento.** Fundido rápido al cambiar de pestaña, tarjetas que aparecen escalonadas (`Stagger`/`Reveal`), píldora de la pestaña activa que se desliza (Motion `layoutId`) y panel que sube desde abajo.

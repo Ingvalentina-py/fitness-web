@@ -57,7 +57,9 @@
 
   /* ── Tipografía: Archivo, una sola familia ── */
   --font-family: 'Archivo Variable', system-ui, sans-serif;
-  --font-stretch-display: 125%; /* ancho expandido para títulos */
+  /* Ancho de los títulos: Archivo admite de 62 % a 125 %. 110 % mantiene el carácter
+     deportivo sin que los títulos se vean estirados. */
+  --font-stretch-display: 110%;
   --font-weight-display: 800;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

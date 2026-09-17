@@ -1,4 +1,7 @@
+/* minmax(0, 1fr): la columna puede encogerse aunque algún contenido sea largo,
+   así nada se sale por la derecha en celulares angostos */
 .stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-6);
 }
