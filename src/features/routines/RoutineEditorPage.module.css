@@ -1,0 +1,55 @@
+.sectionTitle {
+  font-size: var(--text-xl);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.exercisesHeader {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.count {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.empty {
+  color: var(--text-muted);
+}
+
+/* Queda pegada abajo, por encima de la barra de pestañas del celular */
+.saveBar {
+  position: sticky;
+  bottom: calc(var(--bottom-nav-height) + var(--space-6) + env(safe-area-inset-bottom));
+  z-index: 5;
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+@media (min-width: 768px) {
+  .saveBar {
+    bottom: var(--space-6);
+  }
+}
