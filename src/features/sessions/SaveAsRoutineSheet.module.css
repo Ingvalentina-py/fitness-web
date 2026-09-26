@@ -1,0 +1,9 @@
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.explanation {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}

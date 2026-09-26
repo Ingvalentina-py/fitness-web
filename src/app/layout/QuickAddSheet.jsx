@@ -1,15 +1,18 @@
 import { Dumbbell, Sparkles } from 'lucide-react'
+import { useState } from 'react'
 import Badge from '../../components/Badge.jsx'
 import Chip from '../../components/Chip.jsx'
 import Sheet from '../../components/Sheet.jsx'
 import { getIcon } from '../../components/icons.js'
 import { useActivityTypes } from '../../features/activities/useActivityTypes.js'
+import StartSessionSheet from '../../features/sessions/StartSessionSheet.jsx'
 import styles from './QuickAddSheet.module.css'
 
-// Panel del botón "+". Registrar sesiones llega en la Fase 5 y otras actividades en la Fase 6.
+// Panel del botón "+". Registrar otras actividades llega en la Fase 6.
 export default function QuickAddSheet({ open, onClose }) {
   // Solo pide los tipos de actividad cuando el panel se abre por primera vez
   const { data: activityTypes } = useActivityTypes({ enabled: open })
+  const [isStartOpen, setIsStartOpen] = useState(false)
 
   return (
     <Sheet open={open} onClose={onClose} title="¿Qué vas a registrar?">
@@ -19,6 +22,7 @@ export default function QuickAddSheet({ open, onClose }) {
           tone="var(--color-fuchsia)"
           title="Sesión de gimnasio"
           description="Empieza una rutina guardada o entrena desde cero."
+          onSelect={() => setIsStartOpen(true)}
         />
         <Option
           icon={Sparkles}
@@ -44,14 +48,29 @@ export default function QuickAddSheet({ open, onClose }) {
           </ul>
         </section>
       )}
+
+      {isStartOpen && (
+        <StartSessionSheet
+          onClose={() => {
+            setIsStartOpen(false)
+            onClose()
+          }}
+        />
+      )}
     </Sheet>
   )
 }
 
-// aria-disabled (en vez de disabled) mantiene la opción enfocable y anunciada
-function Option({ icon: Icon, tone, title, description }) {
+// Sin onSelect la opción aún no existe: aria-disabled (en vez de disabled)
+// la mantiene enfocable y anunciada por los lectores de pantalla.
+function Option({ icon: Icon, tone, title, description, onSelect }) {
   return (
-    <button type="button" className={styles.option} aria-disabled="true">
+    <button
+      type="button"
+      className={styles.option}
+      aria-disabled={onSelect ? undefined : 'true'}
+      onClick={onSelect}
+    >
       <span className={styles.optionIcon} style={{ '--tone': tone }} aria-hidden="true">
         <Icon size={26} strokeWidth={2.25} />
       </span>
@@ -59,7 +78,7 @@ function Option({ icon: Icon, tone, title, description }) {
         <span className={styles.optionTitle}>{title}</span>
         <span className={styles.optionDescription}>{description}</span>
       </span>
-      <Badge>Pronto</Badge>
+      {!onSelect && <Badge>Pronto</Badge>}
     </button>
   )
 }

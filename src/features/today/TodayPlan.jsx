@@ -1,4 +1,5 @@
 import { CalendarDays, ChevronRight, Moon, Play } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 import Alert from '../../components/Alert.jsx'
 import Button from '../../components/Button.jsx'
@@ -11,12 +12,14 @@ import { getTodayDayOfWeek } from '../../lib/days.js'
 import { plural } from '../../lib/format.js'
 import { useMetaLabels } from '../../lib/useMetaLabels.js'
 import { useWeeklyPlan } from '../routines/useWeeklyPlan.js'
+import StartSessionSheet from '../sessions/StartSessionSheet.jsx'
 import styles from './TodayPlan.module.css'
 
 // "Planeado para hoy" según el plan semanal y la zona horaria de la persona
 export default function TodayPlan({ timeZone }) {
   const { data: plan, isPending, isError } = useWeeklyPlan()
   const labels = useMetaLabels()
+  const [isStartOpen, setIsStartOpen] = useState(false)
 
   if (isPending) return <GlassCard>Cargando tu plan de hoy…</GlassCard>
   if (isError) return <Alert>No pudimos cargar tu plan de hoy.</Alert>
@@ -54,6 +57,8 @@ export default function TodayPlan({ timeZone }) {
     )
   }
 
+  const plannedRoutines = items.filter((item) => item.kind === 'routine').map((item) => item.routine)
+
   return (
     <GlassCard aria-labelledby="today-plan-title">
       <h2 id="today-plan-title" className={styles.title}>
@@ -86,11 +91,20 @@ export default function TodayPlan({ timeZone }) {
         )}
       </ul>
 
-      {items.some((item) => item.kind === 'routine') && (
-        <Button icon={Play} size="lg" disabled>
-          Empezar rutina · llega en la Fase 5
+      {/* Con una sola rutina planeada se empieza de una; con varias, se elige cuál */}
+      {plannedRoutines.length === 1 ? (
+        <Button as={Link} to={`/sesion?rutina=${plannedRoutines[0]._id}`} icon={Play} size="lg">
+          Empezar {plannedRoutines[0].name}
         </Button>
+      ) : (
+        plannedRoutines.length > 1 && (
+          <Button icon={Play} size="lg" onClick={() => setIsStartOpen(true)}>
+            Empezar rutina
+          </Button>
+        )
       )}
+
+      {isStartOpen && <StartSessionSheet onClose={() => setIsStartOpen(false)} />}
     </GlassCard>
   )
 }

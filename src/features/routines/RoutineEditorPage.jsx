@@ -1,7 +1,7 @@
 import { Play, Plus, Save } from 'lucide-react'
 import { Reorder } from 'motion/react'
 import { useRef, useState } from 'react'
-import { useBlocker, useNavigate, useParams, useSearchParams } from 'react-router'
+import { Link, useBlocker, useNavigate, useParams, useSearchParams } from 'react-router'
 import Alert from '../../components/Alert.jsx'
 import BackLink from '../../components/BackLink.jsx'
 import Button from '../../components/Button.jsx'
@@ -262,8 +262,8 @@ function RoutineForm({ routine, groups, goals }) {
           {save.isPending ? 'Guardando…' : 'Guardar rutina'}
         </Button>
         {routine && (
-          <Button variant="ghost" size="sm" icon={Play} disabled>
-            Empezar rutina · llega en la Fase 5
+          <Button as={Link} to={`/sesion?rutina=${routine._id}`} variant="ghost" size="sm" icon={Play}>
+            Empezar rutina
           </Button>
         )}
       </div>

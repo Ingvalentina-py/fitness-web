@@ -1,4 +1,4 @@
-import { Archive, ArrowDown, ArrowUp, Copy, Ellipsis, GripVertical, Pencil } from 'lucide-react'
+import { Archive, ArrowDown, ArrowUp, Copy, Ellipsis, GripVertical, Pencil, Play } from 'lucide-react'
 import { Reorder, useDragControls } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
@@ -56,6 +56,11 @@ export default function RoutineRow({ routine, canMoveUp, canMoveDown, onMove, on
         onClose={() => setIsMenuOpen(false)}
         title={routine.name}
         actions={[
+          {
+            label: 'Empezar rutina',
+            icon: Play,
+            onSelect: () => navigate(`/sesion?rutina=${routine._id}`),
+          },
           { label: 'Editar', icon: Pencil, onSelect: () => navigate(`/rutinas/${routine._id}`) },
           { label: 'Duplicar', icon: Copy, onSelect: () => duplicateRoutine.mutate(routine._id) },
           canMoveUp && { label: 'Subir', icon: ArrowUp, onSelect: () => onMove(-1) },

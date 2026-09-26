@@ -1,0 +1,184 @@
+/* Tarjeta del momento estrella: el confeti se posiciona dentro de ella */
+.celebration {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.volumeLabel {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.volume {
+  font-size: var(--text-3xl);
+  font-stretch: var(--font-stretch-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1;
+  color: var(--primary-strong);
+}
+
+.unit {
+  font-size: var(--text-xl);
+}
+
+.phrase {
+  font-size: var(--text-md);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.sectionTitle {
+  font-size: var(--text-xl);
+}
+
+.subtitle {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* ── Récords ── */
+.records,
+.exercises,
+.muscles {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.record {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: rgb(255 201 40 / 0.3);
+}
+
+.recordIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--text);
+  background: var(--color-yellow);
+  animation: pulse 2s var(--ease-out) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 201 40 / 0.7);
+  }
+  60% {
+    box-shadow: 0 0 0 10px rgb(255 201 40 / 0);
+  }
+}
+
+.recordText {
+  display: grid;
+  min-width: 0;
+}
+
+.recordName {
+  font-weight: 800;
+}
+
+.recordDetail {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ── Datos de la sesión ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+@media (min-width: 480px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.stat {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-1);
+  min-width: 0;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
+  text-align: center;
+  background: rgb(255 255 255 / 0.55);
+}
+
+.statLabel {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.statValue {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-stretch: var(--font-stretch-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1.1;
+}
+
+.muscles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.muscle {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  background: rgb(18 214 197 / 0.22);
+}
+
+.notes {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ── Ejercicios ── */
+.exercise {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: rgb(255 255 255 / 0.55);
+}
+
+.exerciseName {
+  font-weight: 800;
+}
+
+.unilateral {
+  font-weight: 600;
+  color: var(--primary-strong);
+}
+
+.exerciseSets {
+  font-size: var(--text-sm);
+}
+
+.exerciseVolume {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-2);
+}

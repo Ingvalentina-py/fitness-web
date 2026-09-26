@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router'
 import { useCurrentUser } from '../../features/auth/useAuth.js'
+import ActiveSessionBar from '../../features/sessions/ActiveSessionBar.jsx'
 import BottomNav from './BottomNav.jsx'
 import MobileHeader from './MobileHeader.jsx'
 import QuickAddSheet from './QuickAddSheet.jsx'
@@ -24,6 +25,9 @@ export default function AppLayout() {
 
       <div className={styles.main}>
         <MobileHeader user={user} />
+
+        {/* Recordatorio de la sesión a medias; en la propia sesión sobra */}
+        {!pathname.startsWith('/sesion') && <ActiveSessionBar />}
 
         {/* key = ruta: al cambiar de pestaña el contenido se vuelve a montar y entra con un fundido rápido */}
         <motion.main

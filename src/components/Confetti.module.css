@@ -1,0 +1,22 @@
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.piece,
+.round {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.round {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

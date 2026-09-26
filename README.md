@@ -95,6 +95,8 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | `/rutinas/nueva` | Con sesión | Crear rutina (`?grupo=<id>` elige el grupo)       |
 | `/rutinas/:routineId` | Con sesión | Editar rutina                                |
 | `/rutinas/plan` | Con sesión | Editar el plan semanal (se guarda al instante)     |
+| `/sesion`    | Con sesión | Sesión de gimnasio en curso (`?rutina=<id>` la empieza desde una rutina; `?nueva=1`, desde cero) |
+| `/sesion/:sessionId/resumen` | Con sesión | Resumen y celebración al terminar        |
 | `/historial` | Con sesión | Calendario (vacía hasta la Fase 7)                    |
 | `/progreso`  | Con sesión | Estadísticas y récords (vacía hasta la Fase 8)        |
 | `/perfil`    | Con sesión | Nombre, preferencias, contraseña y cerrar sesión      |
@@ -108,6 +110,17 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 - **Actualizaciones optimistas.** Al reordenar o editar el plan semanal la pantalla cambia al instante y, si la API falla, vuelve atrás (`useRoutines.js`, `useWeeklyPlan.js`).
 - **Editor de rutinas.** Series con botones −/+, rango de repeticiones, descanso y notas por ejercicio. El buscador permite elegir varios ejercicios de una vez, filtrar por músculo y equipo, o crear uno propio sin salir. Si sales con cambios sin guardar, pide confirmación (`useBlocker`).
 - **División sugerida.** Las cuentas nuevas la reciben al registrarse; si no tienes rutinas, la pantalla ofrece "Usar división sugerida".
+
+## Sesión de gimnasio
+
+- **El borrador vive en el navegador** (`localStorage`, en `features/sessions/sessionDraft.js`). Mientras entrenas nada viaja a la API: funciona sin señal y el historial no se llena de sesiones a medias. Al pulsar "Terminar sesión" se envía entera y el borrador se borra. Los componentes lo leen con `useSyncExternalStore`, la forma de React de suscribirse a un dato que vive fuera de React.
+- **Registrar una serie con un toque.** Al marcar una serie como hecha, si está vacía copia las repeticiones y el peso de la serie anterior (o de la vez anterior, si la unidad coincide). Los campos muestran como sugerencia las repeticiones objetivo de la rutina.
+- **La vez anterior.** Cada ejercicio muestra lo que hiciste la última vez (`GET /sessions/previous`), incluido "(por lado)" en los unilaterales.
+- **Volumen en vivo.** `sessionStats.js` repite el cálculo de la API (solo series marcadas, unilaterales × 2) para ver el avance sin esperar a guardar. El valor que queda guardado siempre es el del servidor.
+- **Temporizador de descanso.** Arranca al marcar una serie, con el descanso de la rutina. Guarda el instante en que termina y calcula cuánto falta, así el reloj sigue bien aunque el celular apague la pantalla.
+- **Aviso de sesión en curso.** Si sales de `/sesion` con una sesión a medias, aparece una barra arriba con el tiempo corriendo (`ActiveSessionBar`).
+- **Unidad por ejercicio.** kg o lb se elige en el menú del ejercicio y se aplica a todas sus series; en el gimnasio la máquina no cambia de unidad a mitad de ejercicio.
+- **Celebración.** El resumen cuenta el volumen con `CountUp` y suelta confeti. Ambos respetan "reducir movimiento" y, si la pestaña está en segundo plano (sin cuadros de animación), el número se muestra directamente.
 
 ## Guardas de sesión
 
@@ -131,6 +144,7 @@ src/
 │   ├── profile/      # Perfil y preferencias
 │   ├── progress/     # Progreso
 │   ├── routines/     # Grupos, rutinas, editor y plan semanal
+│   ├── sessions/     # Sesión de gimnasio: borrador, series, descanso y resumen
 │   ├── status/       # Estado de la conexión
 │   ├── styleguide/   # Guía de estilos (solo desarrollo)
 │   └── today/        # Hoy

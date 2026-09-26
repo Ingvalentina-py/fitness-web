@@ -9,6 +9,8 @@ import ProfilePage from '../features/profile/ProfilePage.jsx'
 import ProgressPage from '../features/progress/ProgressPage.jsx'
 import RoutineEditorPage from '../features/routines/RoutineEditorPage.jsx'
 import RoutinesPage from '../features/routines/RoutinesPage.jsx'
+import SessionPage from '../features/sessions/SessionPage.jsx'
+import SessionSummaryPage from '../features/sessions/SessionSummaryPage.jsx'
 import WeeklyPlanPage from '../features/routines/WeeklyPlanPage.jsx'
 import StatusPage from '../features/status/StatusPage.jsx'
 import TodayPage from '../features/today/TodayPage.jsx'
@@ -48,6 +50,8 @@ export const router = createBrowserRouter([
           { path: '/rutinas/nueva', Component: RoutineEditorPage },
           { path: '/rutinas/plan', Component: WeeklyPlanPage },
           { path: '/rutinas/:routineId', Component: RoutineEditorPage },
+          { path: '/sesion', Component: SessionPage },
+          { path: '/sesion/:sessionId/resumen', Component: SessionSummaryPage },
           { path: '/historial', Component: HistoryPage },
           { path: '/progreso', Component: ProgressPage },
           { path: '/perfil', Component: ProfilePage },
