@@ -1,15 +1,19 @@
-import { CalendarDays, Save, Trophy } from 'lucide-react'
-import { useState } from 'react'
+import { CalendarDays, Save, Trophy, Volume2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router'
 import Alert from '../../components/Alert.jsx'
 import Button from '../../components/Button.jsx'
 import Confetti from '../../components/Confetti.jsx'
 import CountUp from '../../components/CountUp.jsx'
 import GlassCard from '../../components/GlassCard.jsx'
+import IconButton from '../../components/IconButton.jsx'
 import PageHeader from '../../components/PageHeader.jsx'
 import { Reveal, Stagger } from '../../components/Reveal.jsx'
 import { formatDuration, formatNumber } from '../../lib/format.js'
+import { canSpeak, speak, stopSpeaking } from '../../lib/speech.js'
 import { useMetaLabels } from '../../lib/useMetaLabels.js'
+import { useCurrentUser } from '../auth/useAuth.js'
+import { usePhrases } from '../phrases/usePhrases.js'
 import SaveAsRoutineSheet from './SaveAsRoutineSheet.jsx'
 import { workedMuscles } from './sessionStats.js'
 import { useSession } from './useSessions.js'
@@ -17,21 +21,22 @@ import styles from './SessionSummaryPage.module.css'
 
 const RECORD_LABELS = { maxWeight: 'Peso máximo', bestVolume: 'Mejor volumen' }
 
-// El momento estrella: conteo animado del volumen, confeti suave y los récords.
-// En la Fase 9 la frase saldrá de las frases motivacionales guardadas.
-const CLOSING_PHRASE = 'Otra sesión que suma. Tu constancia es la que construye.'
-
 // /sesion/:sessionId/resumen
 export default function SessionSummaryPage() {
   const { sessionId } = useParams()
   const location = useLocation()
+  const { data: user } = useCurrentUser()
   const { data: session, isPending, isError } = useSession(sessionId)
   const labels = useMetaLabels()
   const [isSaveOpen, setIsSaveOpen] = useState(false)
 
   // Los récords llegan al navegar desde la sesión; al recargar la página no están
-  // (se verán en Progreso, en la Fase 8).
+  // (siguen estando en Progreso).
   const records = location.state?.records ?? []
+  // Si superaste una marca, la frase la celebra; si no, celebra haber terminado
+  const context = records.length > 0 ? 'record' : 'sessionCompleted'
+  const { data: phrases } = usePhrases({ context })
+  const phrase = usePickOne(phrases)
 
   if (isPending) return <GlassCard>Cargando tu resumen…</GlassCard>
   if (isError) return <Alert>No pudimos cargar esta sesión.</Alert>
@@ -58,7 +63,7 @@ export default function SessionSummaryPage() {
             <CountUp value={session.totalVolumeKg} format={(value) => formatNumber(value, 0)} />
             <span className={styles.unit}> kg</span>
           </p>
-          <p className={styles.phrase}>{CLOSING_PHRASE}</p>
+          <ClosingPhrase phrase={phrase} readAloud={user.preferences.voicePhrases} />
         </GlassCard>
       </Reveal>
 
@@ -158,6 +163,41 @@ export default function SessionSummaryPage() {
 
       {isSaveOpen && <SaveAsRoutineSheet session={session} onClose={() => setIsSaveOpen(false)} />}
     </Stagger>
+  )
+}
+
+// Una frase al azar de las que aplican, elegida una sola vez por visita
+function usePickOne(phrases) {
+  const [seed] = useState(() => Math.random())
+  if (!phrases?.length) return null
+  return phrases[Math.floor(seed * phrases.length)]
+}
+
+// La frase del cierre. Si tienes la voz activada en tu perfil, se lee sola al llegar;
+// el botón sirve para repetirla (y para escucharla aunque la tengas desactivada).
+function ClosingPhrase({ phrase, readAloud }) {
+  useEffect(() => {
+    if (!phrase || !readAloud) return
+
+    speak(phrase.text)
+    // Si sales de la pantalla a mitad de frase, se calla
+    return stopSpeaking
+  }, [phrase, readAloud])
+
+  if (!phrase) return null
+
+  return (
+    <p className={styles.phrase}>
+      {phrase.text}
+      {canSpeak() && (
+        <IconButton
+          icon={Volume2}
+          label="Escuchar la frase"
+          size="sm"
+          onClick={() => speak(phrase.text)}
+        />
+      )}
+    </p>
   )
 }
 

@@ -103,6 +103,7 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | `/perfil`    | Con sesión | Nombre, preferencias, contraseña y cerrar sesión      |
 | `/perfil/ejercicios` | Con sesión | Catálogo: buscar, filtrar y crear ejercicios propios |
 | `/perfil/actividades` | Con sesión | Tipos de actividad: crear, editar y archivar los tuyos |
+| `/perfil/frases` | Con sesión | Tus frases motivacionales: crear, editar, activar y borrar |
 | `/estado`    | Pública    | Estado de frontend, API y base de datos               |
 | `/estilos`   | Desarrollo | Guía de estilos                                       |
 
@@ -153,6 +154,13 @@ Reglas que siguen todas, tomadas de la guía de visualización de datos:
 - **Todo dato es alcanzable sin pasar el dedo por encima:** cada gráfica trae un "Ver los datos" con la tabla, y las marcas responden igual al foco del teclado que al puntero.
 - **A escala 1:1.** Las líneas se dibujan con el ancho real del contenedor (`useElementWidth`): si se dibujaran en un lienzo fijo y se dejaran escalar, los textos quedarían diminutos en el celular.
 
+## Frases motivacionales
+
+- **Rotan cada 6 segundos** en Hoy con un fundido y desenfoque suave, y **se quedan quietas al tocarlas** (el botón dice si está en pausa). La primera aparece ya escrita, sin animación de entrada: si la pestaña está en segundo plano no hay animación que la revele.
+- **Se empieza en una frase al azar**, así no ves siempre la misma al abrir la app.
+- **Según el momento.** En Hoy salen las generales y, si llevas dos días o más de racha, también las que la celebran. Al terminar una sesión sale una de "sesión terminada", o una de "récord" si superaste una marca.
+- **Voz opcional** (`lib/speech.js`, Web Speech API): con la voz activada en tu perfil, la frase del resumen se lee sola al llegar y se calla si sales de la pantalla. El botón del altavoz siempre está para repetirla. Si el navegador no trae voz, no pasa nada: la frase se lee en pantalla igual.
+
 ## Guardas de sesión
 
 `RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
@@ -174,6 +182,7 @@ src/
 │   ├── exercises/    # Catálogo, buscador y formulario de ejercicios
 │   ├── history/      # Calendario del mes y detalle del día
 │   ├── profile/      # Perfil y preferencias
+│   ├── phrases/      # Frases motivacionales: rotación y gestión
 │   ├── progress/     # Rachas, distribuciones, progreso por ejercicio y récords
 │   ├── routines/     # Grupos, rutinas, editor y plan semanal
 │   ├── sessions/     # Sesión de gimnasio: borrador, series, descanso y resumen

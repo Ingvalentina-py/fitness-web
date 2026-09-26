@@ -6,6 +6,7 @@ import RegisterPage from '../features/auth/RegisterPage.jsx'
 import RequireAuth from '../features/auth/RequireAuth.jsx'
 import ExerciseCatalogPage from '../features/exercises/ExerciseCatalogPage.jsx'
 import HistoryPage from '../features/history/HistoryPage.jsx'
+import PhrasesPage from '../features/phrases/PhrasesPage.jsx'
 import ProfilePage from '../features/profile/ProfilePage.jsx'
 import ProgressPage from '../features/progress/ProgressPage.jsx'
 import RoutineEditorPage from '../features/routines/RoutineEditorPage.jsx'
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
           { path: '/perfil', Component: ProfilePage },
           { path: '/perfil/ejercicios', Component: ExerciseCatalogPage },
           { path: '/perfil/actividades', Component: ActivityTypesPage },
+          { path: '/perfil/frases', Component: PhrasesPage },
         ],
       },
     ],

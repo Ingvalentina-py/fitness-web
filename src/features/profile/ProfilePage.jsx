@@ -232,6 +232,7 @@ const CUSTOMIZATION_ITEMS = [
     tone: 'var(--color-yellow)',
     title: 'Mis frases',
     description: 'Tus frases motivacionales.',
+    to: '/perfil/frases',
   },
 ]
 
