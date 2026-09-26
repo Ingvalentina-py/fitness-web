@@ -161,9 +161,51 @@ Reglas que siguen todas, tomadas de la guía de visualización de datos:
 - **Según el momento.** En Hoy salen las generales y, si llevas dos días o más de racha, también las que la celebran. Al terminar una sesión sale una de "sesión terminada", o una de "récord" si superaste una marca.
 - **Voz opcional** (`lib/speech.js`, Web Speech API): con la voz activada en tu perfil, la frase del resumen se lee sola al llegar y se calla si sales de la pantalla. El botón del altavoz siempre está para repetirla. Si el navegador no trae voz, no pasa nada: la frase se lee en pantalla igual.
 
+## Peso de la app
+
+Las pantallas que no se ven al abrir se cargan cuando se visitan (`lazy` por ruta en `app/router.js`). Al entrar se descarga Hoy y lo compartido (~172 KB comprimidos) y cada pantalla suma entre 1 y 8 KB al visitarla por primera vez.
+
 ## Guardas de sesión
 
 `RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
+
+## Despliegue en Vercel
+
+Primero se despliega `fitness-api` (necesitas su dominio para el paso 2).
+
+1. **Vercel → Add New → Project** e importa el repositorio `fitness-web`.
+   - Framework Preset: **Vite** (lo detecta solo). Build: `npm run build`. Output: `dist`.
+2. **Edita `vercel.json`** y reemplaza `TU-API` por el dominio real de la API. Sube el cambio: cada push vuelve a desplegar.
+
+   ```json
+   { "source": "/api/:path*", "destination": "https://fitness-api-xxxx.vercel.app/api/:path*" }
+   ```
+
+   Gracias a ese rewrite, el navegador cree que la API vive en este mismo dominio: la cookie de sesión funciona igual que en local, sin CORS y sin cookies de terceros.
+
+3. **Settings → Environment Variables** (Production y Preview):
+
+   | Variable | Valor |
+   | --- | --- |
+   | `VITE_API_URL` | `/api/v1` |
+
+   Hace falta aunque sea el mismo valor del `.env` local: ese archivo no se sube, y sin la variable la app se detiene al arrancar con un mensaje claro en vez de fallar a medias.
+
+4. **Comprueba** en `https://TU-WEB.vercel.app/estado`: las tres filas (frontend, API y base de datos) deben decir "Conectado".
+
+5. Crea tu cuenta desde `/registro` y listo.
+
+### Qué pasa con las direcciones
+
+El segundo rewrite manda cualquier dirección a `index.html` para que la resuelva React Router: así `/historial?dia=2026-09-23` funciona aunque la abras directamente o la compartas. Los archivos que existen (JS, CSS, fuentes) se sirven antes de llegar a esa regla.
+
+### Probar la versión compilada en local
+
+`npm run preview` sirve exactamente lo que se sube a producción, con el mismo reenvío de `/api` a la API local:
+
+```bash
+npm run build && npm run preview
+```
 
 ## Estructura
 

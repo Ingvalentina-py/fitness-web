@@ -15,4 +15,13 @@ export default defineConfig({
       '/api': 'http://localhost:3000',
     },
   },
+  // `npm run preview` sirve la versión compilada. Necesita el mismo reenvío que el
+  // servidor de desarrollo para poder probar en local lo que se verá en producción.
+  preview: {
+    port: 4173,
+    strictPort: true,
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+  },
 })

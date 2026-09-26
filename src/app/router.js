@@ -1,24 +1,17 @@
 import { createBrowserRouter } from 'react-router'
-import ActivityTypesPage from '../features/activities/ActivityTypesPage.jsx'
 import GuestOnly from '../features/auth/GuestOnly.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
 import RegisterPage from '../features/auth/RegisterPage.jsx'
 import RequireAuth from '../features/auth/RequireAuth.jsx'
-import ExerciseCatalogPage from '../features/exercises/ExerciseCatalogPage.jsx'
-import HistoryPage from '../features/history/HistoryPage.jsx'
-import PhrasesPage from '../features/phrases/PhrasesPage.jsx'
-import ProfilePage from '../features/profile/ProfilePage.jsx'
-import ProgressPage from '../features/progress/ProgressPage.jsx'
-import RoutineEditorPage from '../features/routines/RoutineEditorPage.jsx'
-import RoutinesPage from '../features/routines/RoutinesPage.jsx'
-import SessionEditPage from '../features/sessions/SessionEditPage.jsx'
-import SessionPage from '../features/sessions/SessionPage.jsx'
-import SessionSummaryPage from '../features/sessions/SessionSummaryPage.jsx'
-import WeeklyPlanPage from '../features/routines/WeeklyPlanPage.jsx'
 import StatusPage from '../features/status/StatusPage.jsx'
 import TodayPage from '../features/today/TodayPage.jsx'
 import AppLayout from './layout/AppLayout.jsx'
 import NotFoundPage from './NotFoundPage.jsx'
+
+// Las pantallas que no se ven al abrir la app se cargan cuando se visitan.
+// `lazy` de React Router parte el paquete por rutas: al entrar solo se descarga
+// Hoy (y lo compartido), no el calendario ni las gráficas de Progreso.
+const lazyPage = (load) => async () => ({ Component: (await load()).default })
 
 // Las rutas sin `path` son "envoltorios": deciden si y cómo se muestran sus rutas hijas.
 export const router = createBrowserRouter([
@@ -27,9 +20,7 @@ export const router = createBrowserRouter([
   // Guía de estilos: solo en desarrollo. En producción esta ruta ni siquiera se compila.
   import.meta.env.DEV && {
     path: '/estilos',
-    lazy: async () => ({
-      Component: (await import('../features/styleguide/StyleGuidePage.jsx')).default,
-    }),
+    lazy: lazyPage(() => import('../features/styleguide/StyleGuidePage.jsx')),
   },
 
   // Solo sin sesión
@@ -49,19 +40,52 @@ export const router = createBrowserRouter([
         Component: AppLayout,
         children: [
           { path: '/', Component: TodayPage },
-          { path: '/rutinas', Component: RoutinesPage },
-          { path: '/rutinas/nueva', Component: RoutineEditorPage },
-          { path: '/rutinas/plan', Component: WeeklyPlanPage },
-          { path: '/rutinas/:routineId', Component: RoutineEditorPage },
-          { path: '/sesion', Component: SessionPage },
-          { path: '/sesion/:sessionId/resumen', Component: SessionSummaryPage },
-          { path: '/sesion/:sessionId/editar', Component: SessionEditPage },
-          { path: '/historial', Component: HistoryPage },
-          { path: '/progreso', Component: ProgressPage },
-          { path: '/perfil', Component: ProfilePage },
-          { path: '/perfil/ejercicios', Component: ExerciseCatalogPage },
-          { path: '/perfil/actividades', Component: ActivityTypesPage },
-          { path: '/perfil/frases', Component: PhrasesPage },
+          {
+            path: '/rutinas',
+            lazy: lazyPage(() => import('../features/routines/RoutinesPage.jsx')),
+          },
+          {
+            path: '/rutinas/nueva',
+            lazy: lazyPage(() => import('../features/routines/RoutineEditorPage.jsx')),
+          },
+          {
+            path: '/rutinas/plan',
+            lazy: lazyPage(() => import('../features/routines/WeeklyPlanPage.jsx')),
+          },
+          {
+            path: '/rutinas/:routineId',
+            lazy: lazyPage(() => import('../features/routines/RoutineEditorPage.jsx')),
+          },
+          { path: '/sesion', lazy: lazyPage(() => import('../features/sessions/SessionPage.jsx')) },
+          {
+            path: '/sesion/:sessionId/resumen',
+            lazy: lazyPage(() => import('../features/sessions/SessionSummaryPage.jsx')),
+          },
+          {
+            path: '/sesion/:sessionId/editar',
+            lazy: lazyPage(() => import('../features/sessions/SessionEditPage.jsx')),
+          },
+          {
+            path: '/historial',
+            lazy: lazyPage(() => import('../features/history/HistoryPage.jsx')),
+          },
+          {
+            path: '/progreso',
+            lazy: lazyPage(() => import('../features/progress/ProgressPage.jsx')),
+          },
+          { path: '/perfil', lazy: lazyPage(() => import('../features/profile/ProfilePage.jsx')) },
+          {
+            path: '/perfil/ejercicios',
+            lazy: lazyPage(() => import('../features/exercises/ExerciseCatalogPage.jsx')),
+          },
+          {
+            path: '/perfil/actividades',
+            lazy: lazyPage(() => import('../features/activities/ActivityTypesPage.jsx')),
+          },
+          {
+            path: '/perfil/frases',
+            lazy: lazyPage(() => import('../features/phrases/PhrasesPage.jsx')),
+          },
         ],
       },
     ],

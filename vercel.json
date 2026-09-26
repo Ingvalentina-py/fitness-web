@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "//": "PENDIENTE: reemplaza TU-API por el dominio real del proyecto fitness-api en Vercel. Gracias a este rewrite el navegador cree que la API vive en este mismo dominio, así la cookie de sesión funciona igual que en local (y sin CORS).",
+      "source": "/api/:path*",
+      "destination": "https://TU-API.vercel.app/api/:path*"
+    },
+    {
+      "//": "Cualquier otra dirección la resuelve React Router dentro de index.html. Los archivos que existen (JS, CSS, fuentes) se sirven antes de llegar aquí.",
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
