@@ -99,7 +99,7 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | `/sesion/:sessionId/resumen` | Con sesión | Resumen y celebración al terminar        |
 | `/sesion/:sessionId/editar` | Con sesión | Corregir una sesión guardada, series incluidas |
 | `/historial` | Con sesión | Calendario del mes y detalle del día (`?dia=AAAA-MM-DD`) |
-| `/progreso`  | Con sesión | Estadísticas y récords (vacía hasta la Fase 8)        |
+| `/progreso`  | Con sesión | Rachas, días activos, distribuciones, progreso por ejercicio y récords |
 | `/perfil`    | Con sesión | Nombre, preferencias, contraseña y cerrar sesión      |
 | `/perfil/ejercicios` | Con sesión | Catálogo: buscar, filtrar y crear ejercicios propios |
 | `/perfil/actividades` | Con sesión | Tipos de actividad: crear, editar y archivar los tuyos |
@@ -140,6 +140,19 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 - **Corregir.** Las actividades se editan en el mismo formulario con el que se registran; las sesiones tienen su pantalla (`/sesion/:id/editar`), que reutiliza la tabla de series de la sesión en curso pero sin temporizador ni "la vez anterior", porque ahí no aplica.
 - **Ojo con `useBlocker`.** El aviso de "cambios sin guardar" se apaga con una referencia (`useRef`) y no con el estado de la mutación: al guardar, la navegación ocurre antes de que el componente se vuelva a dibujar.
 
+## Gráficas
+
+Las gráficas son **SVG y HTML propios** (`components/charts/`), sin librería. El motivo: las que necesita la app son pocas y sencillas (columnas, barras horizontales y líneas), una librería como Recharts pesa casi tanto como toda la app hoy, y el estilo pedía control exacto de cada marca. Si más adelante hacen falta gráficas complejas (dispersión, zoom, muchas series), ahí sí compensa traer una.
+
+Reglas que siguen todas, tomadas de la guía de visualización de datos:
+
+- **Nunca dos ejes en una misma gráfica.** Peso máximo y volumen son dos escalas distintas, así que van en dos gráficas; juntarlas haría que cualquier cruce pareciera significativo sin serlo.
+- **El color nunca es lo único que distingue.** La paleta viva del proyecto no pasa la prueba de daltonismo como paleta de series (lima y amarillo son casi el mismo color para quien tiene protanopia), así que ninguna gráfica usa el color para separar series: cada barra lleva su nombre y su valor escritos, y el color solo acompaña.
+- **Marcas finas y discretas:** barras de máximo 24 px con la punta redondeada de 4 px y cuadrada en la base, líneas de 2 px, puntos de 10 px con anillo del color de la superficie, rejilla de 1 px y un hueco de 2 px entre barras vecinas.
+- **Se etiqueta lo que cuenta, no todo:** el valor más alto (o el que señalas) debajo de la gráfica, y el eje carga el resto.
+- **Todo dato es alcanzable sin pasar el dedo por encima:** cada gráfica trae un "Ver los datos" con la tabla, y las marcas responden igual al foco del teclado que al puntero.
+- **A escala 1:1.** Las líneas se dibujan con el ancho real del contenedor (`useElementWidth`): si se dibujaran en un lienzo fijo y se dejaran escalar, los textos quedarían diminutos en el celular.
+
 ## Guardas de sesión
 
 `RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
@@ -154,13 +167,14 @@ src/
 │   ├── router.js     # Rutas
 │   └── queryClient.js
 ├── components/       # Sistema de diseño: componentes reutilizables con su .module.css
+│   └── charts/       # Gráficas propias: columnas, barras, líneas y tabla de datos
 ├── features/         # Una carpeta por funcionalidad
 │   ├── activities/   # Registrar actividades y gestionar sus tipos
 │   ├── auth/         # Sesión, guardas de rutas, inicio de sesión y registro
 │   ├── exercises/    # Catálogo, buscador y formulario de ejercicios
 │   ├── history/      # Calendario del mes y detalle del día
 │   ├── profile/      # Perfil y preferencias
-│   ├── progress/     # Progreso
+│   ├── progress/     # Rachas, distribuciones, progreso por ejercicio y récords
 │   ├── routines/     # Grupos, rutinas, editor y plan semanal
 │   ├── sessions/     # Sesión de gimnasio: borrador, series, descanso y resumen
 │   ├── status/       # Estado de la conexión

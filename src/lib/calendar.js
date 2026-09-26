@@ -8,6 +8,24 @@ export function toDayString(year, month, day) {
   return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
 
+// Suma (o resta) días a un "AAAA-MM-DD"
+export function shiftDay(day, amount) {
+  return new Date(Date.parse(`${day}T00:00:00Z`) + amount * 86_400_000).toISOString().slice(0, 10)
+}
+
+// El primer día de la semana que contiene a `day`, según la preferencia de la persona
+export function startOfWeek(day, weekStartsOn) {
+  const weekday = new Date(`${day}T00:00:00Z`).getUTCDay()
+  return shiftDay(day, -((weekday - weekStartsOn + 7) % 7))
+}
+
+// "2026-09-21" → "21 sep"
+export function formatDayShort(day) {
+  return new Intl.DateTimeFormat('es', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+    .format(new Date(`${day}T00:00:00Z`))
+    .replace('.', '')
+}
+
 export function daysInMonth(year, month) {
   return new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
 }

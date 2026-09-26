@@ -1,0 +1,76 @@
+.sectionTitle {
+  font-size: var(--text-xl);
+}
+
+.message {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.record {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: rgb(255 201 40 / 0.22);
+}
+
+.icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--text);
+  background: var(--color-yellow);
+}
+
+.text {
+  min-width: 0;
+}
+
+.name {
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.archived {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.marks {
+  display: grid;
+  gap: 2px;
+  margin: var(--space-1) 0 0;
+}
+
+.mark {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.mark dt {
+  color: var(--text-muted);
+}
+
+.mark dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.when {
+  font-weight: 500;
+  color: var(--text-muted);
+}

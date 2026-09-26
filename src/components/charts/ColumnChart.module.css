@@ -1,0 +1,104 @@
+.chart {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* Dos columnas (eje + barras) y dos filas (barras + etiquetas), para que la
+   rejilla quede exactamente detrás de las barras y no cruce los textos. */
+.plot {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: var(--space-1) var(--space-2);
+}
+
+.axis {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 160px;
+  text-align: right;
+}
+
+.tick {
+  font-size: 10px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.columns,
+.labels {
+  display: flex;
+  gap: 2px; /* el hueco que separa barras vecinas: lo hace la superficie, no un borde */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.columns {
+  grid-column: 2;
+  grid-row: 1;
+  height: 160px;
+  align-items: flex-end;
+  /* Rejilla de 1 px, sólida y discreta, empezando por la base */
+  background-image: repeating-linear-gradient(
+    to top,
+    var(--border) 0 1px,
+    transparent 1px calc(100% / var(--divisions, 3))
+  );
+}
+
+.column {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  justify-content: center;
+}
+
+/* El área de toque es más ancha que la barra y llega hasta arriba */
+.target {
+  display: flex;
+  width: 100%;
+  max-width: 24px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  align-items: flex-end;
+  background: none;
+  cursor: pointer;
+}
+
+.bar {
+  width: 100%;
+  /* Punta redondeada arriba y cuadrada sobre la base */
+  border-radius: 4px 4px 0 0;
+  background: var(--primary-strong);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.active .bar,
+.target:hover .bar {
+  background: var(--primary);
+}
+
+.labels {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.readout {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}

@@ -1,0 +1,66 @@
+.chart {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.svg {
+  display: block;
+  /* El ancho lo fija el componente en píxeles reales; aquí solo se evita desbordar */
+  max-width: 100%;
+}
+
+.grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.tick {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  fill: var(--text-muted);
+}
+
+.line {
+  fill: none;
+  stroke: var(--primary-strong);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* El relleno es un lavado del mismo color, nunca un bloque saturado */
+.area {
+  fill: var(--primary-strong);
+  opacity: 0.1;
+  stroke: none;
+}
+
+.marker {
+  fill: var(--primary-strong);
+}
+
+/* Anillo del color de la superficie: el punto se lee aunque cruce la línea */
+.markerRing {
+  fill: var(--glass-bg-fallback);
+}
+
+.crosshair {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+.target {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.target:focus-visible {
+  fill: rgb(209 16 94 / 0.08);
+  outline: none;
+}
+
+.readout {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
