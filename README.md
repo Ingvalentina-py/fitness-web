@@ -180,13 +180,11 @@ Primero se despliega `fitness-api` (necesitas su dominio para el paso 2).
 
 1. **Vercel → Add New → Project** e importa el repositorio `fitness-web`.
    - Framework Preset: **Vite** (lo detecta solo). Build: `npm run build`. Output: `dist`.
-2. **Edita `vercel.json`** y reemplaza `TU-API` por el dominio real de la API. Sube el cambio: cada push vuelve a desplegar.
+2. **El rewrite ya apunta a `https://fitness-apii.vercel.app`**, el dominio de producción de la API. Si algún día cambia, es esa línea de `vercel.json`.
 
-   ```json
-   { "source": "/api/:path*", "destination": "https://fitness-api-xxxx.vercel.app/api/:path*" }
-   ```
+   Ojo: tiene que ser el dominio **de producción** (fijo y público), no la URL de un despliegue concreto (`fitness-apii-q0i7d4kjg-….vercel.app`). Esas cambian con cada push y están detrás del inicio de sesión de Vercel, así que el rewrite recibiría una redirección en vez de datos.
 
-   Gracias a ese rewrite, el navegador cree que la API vive en este mismo dominio: la cookie de sesión funciona igual que en local, sin CORS y sin cookies de terceros.
+   Gracias a este rewrite, el navegador cree que la API vive en este mismo dominio: la cookie de sesión funciona igual que en local, sin CORS y sin cookies de terceros.
 
 3. **Settings → Environment Variables** (Production y Preview):
 
