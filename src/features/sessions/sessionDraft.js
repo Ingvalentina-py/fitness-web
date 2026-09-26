@@ -10,8 +10,12 @@ const listeners = new Set()
 
 // El componente se suscribe a los cambios del borrador con useSyncExternalStore:
 // es la forma de React 18+ de leer un dato que vive fuera de React.
-export function useSessionDraft() {
-  return useSyncExternalStore(subscribe, () => draft)
+// Solo devuelve el borrador si es de quien tiene la sesión abierta: si alguien más
+// entra en este dispositivo, no ve (ni continúa) el entrenamiento de otra persona.
+export function useSessionDraft(userId) {
+  const stored = useSyncExternalStore(subscribe, () => draft)
+
+  return stored?.userId === userId ? stored : null
 }
 
 export function getDraft() {

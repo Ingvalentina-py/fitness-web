@@ -1,6 +1,7 @@
 import { ChevronRight, Dumbbell } from 'lucide-react'
 import { Link } from 'react-router'
 import { formatClock } from '../../lib/format.js'
+import { useCurrentUser } from '../auth/useAuth.js'
 import { useSessionDraft } from './sessionDraft.js'
 import { useElapsedSeconds } from './useElapsed.js'
 import styles from './ActiveSessionBar.module.css'
@@ -8,7 +9,8 @@ import styles from './ActiveSessionBar.module.css'
 // Aviso fijo arriba cuando hay una sesión a medias y estás en otra pantalla:
 // el borrador vive en el navegador, así que sin este recordatorio es fácil olvidarla.
 export default function ActiveSessionBar() {
-  const draft = useSessionDraft()
+  const { data: user } = useCurrentUser()
+  const draft = useSessionDraft(user._id)
 
   if (!draft) return null
   return <Bar draft={draft} />

@@ -26,7 +26,7 @@ import styles from './SessionPage.module.css'
 // Se llega con ?rutina=<id> (desde una rutina guardada) o ?nueva=1 (desde cero).
 export default function SessionPage() {
   const { data: user } = useCurrentUser()
-  const draft = useSessionDraft()
+  const draft = useSessionDraft(user._id)
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const routineId = searchParams.get('rutina')
