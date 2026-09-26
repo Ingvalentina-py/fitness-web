@@ -14,6 +14,7 @@ export function useMetaLabels() {
       pattern: toMap(meta?.movementPatterns),
       goal: toMap(meta?.routineGoals),
       day: toMap(meta?.daysOfWeek),
+      intensity: toMap(meta?.intensities),
     }
     const labelFrom = (map) => (value) => map.get(value) ?? value
 
@@ -24,6 +25,7 @@ export function useMetaLabels() {
       pattern: labelFrom(maps.pattern),
       goal: labelFrom(maps.goal),
       day: labelFrom(maps.day),
+      intensity: labelFrom(maps.intensity),
     }
   }, [meta])
 }

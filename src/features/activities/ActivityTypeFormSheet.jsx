@@ -5,31 +5,34 @@ import Button from '../../components/Button.jsx'
 import Field from '../../components/Field.jsx'
 import IconByName from '../../components/IconByName.jsx'
 import Sheet from '../../components/Sheet.jsx'
-import { GROUP_ICON_NAMES, getIconLabel } from '../../components/icons.js'
+import Switch from '../../components/Switch.jsx'
+import { ACTIVITY_ICON_NAMES, getIconLabel } from '../../components/icons.js'
 import { getFieldErrors } from '../../lib/formErrors.js'
 import { PALETTE_COLORS } from '../../lib/palette.js'
-import { useCreateGroup, useUpdateGroup } from './useRoutines.js'
-import styles from './GroupFormSheet.module.css'
+import { useCreateActivityType, useUpdateActivityType } from './useActivities.js'
+import styles from './ActivityTypeFormSheet.module.css'
 
-// Crear o editar un grupo: nombre, color e ícono. Se monta solo mientras está abierto.
-export default function GroupFormSheet({ group, onClose }) {
-  const [name, setName] = useState(group?.name ?? '')
-  const [color, setColor] = useState(group?.color ?? PALETTE_COLORS[0].value)
-  const [icon, setIcon] = useState(group?.icon ?? GROUP_ICON_NAMES[0])
+// Crear o editar un tipo de actividad propio: nombre, color, ícono y dos opciones.
+export default function ActivityTypeFormSheet({ activityType, onClose }) {
+  const [name, setName] = useState(activityType?.name ?? '')
+  const [color, setColor] = useState(activityType?.color ?? PALETTE_COLORS[0].value)
+  const [icon, setIcon] = useState(activityType?.icon ?? ACTIVITY_ICON_NAMES[0])
+  const [usesDistance, setUsesDistance] = useState(activityType?.usesDistance ?? false)
+  const [isLegIntensive, setIsLegIntensive] = useState(activityType?.isLegIntensive ?? false)
 
-  const createGroup = useCreateGroup()
-  const updateGroup = useUpdateGroup()
-  const save = group ? updateGroup : createGroup
+  const createActivityType = useCreateActivityType()
+  const updateActivityType = useUpdateActivityType()
+  const save = activityType ? updateActivityType : createActivityType
   const fieldErrors = getFieldErrors(save.error)
 
   function handleSubmit(event) {
     event.preventDefault()
-    const values = { name, color, icon }
-    save.mutate(group ? { id: group._id, ...values } : values, { onSuccess: onClose })
+    const values = { name, color, icon, usesDistance, isLegIntensive }
+    save.mutate(activityType ? { id: activityType._id, ...values } : values, { onSuccess: onClose })
   }
 
   return (
-    <Sheet open onClose={onClose} title={group ? 'Editar grupo' : 'Nuevo grupo'}>
+    <Sheet open onClose={onClose} title={activityType ? 'Editar tipo' : 'Nuevo tipo de actividad'}>
       <form className={styles.form} onSubmit={handleSubmit}>
         {save.isError && !fieldErrors.name && <Alert>{save.error.message}</Alert>}
 
@@ -41,7 +44,7 @@ export default function GroupFormSheet({ group, onClose }) {
             label="Nombre"
             value={name}
             onChange={(event) => setName(event.target.value)}
-            placeholder="Ej.: Glúteo y femoral"
+            placeholder="Ej.: Natación"
             maxLength={40}
             required
             error={fieldErrors.name}
@@ -56,7 +59,7 @@ export default function GroupFormSheet({ group, onClose }) {
                 <input
                   className="visually-hidden"
                   type="radio"
-                  name="group-color"
+                  name="activity-type-color"
                   value={option.value}
                   checked={color === option.value}
                   onChange={() => setColor(option.value)}
@@ -71,12 +74,12 @@ export default function GroupFormSheet({ group, onClose }) {
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>Ícono</legend>
           <div className={styles.icons}>
-            {GROUP_ICON_NAMES.map((iconName) => (
+            {ACTIVITY_ICON_NAMES.map((iconName) => (
               <label key={iconName} className={styles.iconOption}>
                 <input
                   className="visually-hidden"
                   type="radio"
-                  name="group-icon"
+                  name="activity-type-icon"
                   value={iconName}
                   checked={icon === iconName}
                   onChange={() => setIcon(iconName)}
@@ -88,8 +91,23 @@ export default function GroupFormSheet({ group, onClose }) {
           </div>
         </fieldset>
 
+        <div className={styles.switches}>
+          <Switch
+            label="Registra distancia"
+            description="Para bicicleta, patinaje o cualquier actividad donde importe cuánto recorriste."
+            checked={usesDistance}
+            onChange={(event) => setUsesDistance(event.target.checked)}
+          />
+          <Switch
+            label="Exigente para las piernas"
+            description="La app te avisa si planeas pierna intensa justo después de esta actividad."
+            checked={isLegIntensive}
+            onChange={(event) => setIsLegIntensive(event.target.checked)}
+          />
+        </div>
+
         <Button type="submit" icon={Save} disabled={save.isPending}>
-          {save.isPending ? 'Guardando…' : group ? 'Guardar grupo' : 'Crear grupo'}
+          {save.isPending ? 'Guardando…' : activityType ? 'Guardar tipo' : 'Crear tipo'}
         </Button>
       </form>
     </Sheet>

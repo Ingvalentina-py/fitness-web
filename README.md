@@ -90,7 +90,7 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | ------------ | ---------- | ----------------------------------------------------- |
 | `/ingresar`  | Sin sesión | Inicio de sesión                                      |
 | `/registro`  | Sin sesión | Crear cuenta (envía la zona horaria del dispositivo)  |
-| `/`          | Con sesión | Hoy: saludo, resumen del día y lo planeado (con aviso de piernas) |
+| `/`          | Con sesión | Hoy: saludo, resumen del día, lo planeado (con aviso de piernas) y lo que ya registraste |
 | `/rutinas`   | Con sesión | Plan semanal, grupos con sus rutinas y rutinas archivadas |
 | `/rutinas/nueva` | Con sesión | Crear rutina (`?grupo=<id>` elige el grupo)       |
 | `/rutinas/:routineId` | Con sesión | Editar rutina                                |
@@ -101,6 +101,7 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | `/progreso`  | Con sesión | Estadísticas y récords (vacía hasta la Fase 8)        |
 | `/perfil`    | Con sesión | Nombre, preferencias, contraseña y cerrar sesión      |
 | `/perfil/ejercicios` | Con sesión | Catálogo: buscar, filtrar y crear ejercicios propios |
+| `/perfil/actividades` | Con sesión | Tipos de actividad: crear, editar y archivar los tuyos |
 | `/estado`    | Pública    | Estado de frontend, API y base de datos               |
 | `/estilos`   | Desarrollo | Guía de estilos                                       |
 
@@ -122,6 +123,14 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 - **Unidad por ejercicio.** kg o lb se elige en el menú del ejercicio y se aplica a todas sus series; en el gimnasio la máquina no cambia de unidad a mitad de ejercicio.
 - **Celebración.** El resumen cuenta el volumen con `CountUp` y suelta confeti. Ambos respetan "reducir movimiento" y, si la pestaña está en segundo plano (sin cuadros de animación), el número se muestra directamente.
 
+## Otras actividades
+
+- **Registrar en pocos toques.** El panel del botón "+" lista tus tipos: tocar uno abre el formulario con ese tipo ya elegido. La duración tiene atajos de 30, 45, 60 y 90 minutos.
+- **Campos según el tipo.** La distancia solo aparece si el tipo la usa (bicicleta, patinaje…). La intensidad es opcional.
+- **Día, no instante.** Se elige el día en un calendario; la app envía "ahora" si es hoy y el mediodía de ese día si es anterior, para que ninguna zona horaria lo corra al día vecino.
+- **Hoy muestra el día completo.** `GET /activities?day=` trae gimnasio y otras actividades juntas, y la pantalla Hoy las lista en una sola sección con el color de cada tipo.
+- **Tus tipos** se crean y editan en `/perfil/actividades` con el mismo selector de color e ícono de los grupos de rutinas. Los del sistema se ven pero no se tocan; los propios se archivan con confirmación.
+
 ## Guardas de sesión
 
 `RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
@@ -137,7 +146,7 @@ src/
 │   └── queryClient.js
 ├── components/       # Sistema de diseño: componentes reutilizables con su .module.css
 ├── features/         # Una carpeta por funcionalidad
-│   ├── activities/   # Tipos de actividad
+│   ├── activities/   # Registrar actividades y gestionar sus tipos
 │   ├── auth/         # Sesión, guardas de rutas, inicio de sesión y registro
 │   ├── exercises/    # Catálogo, buscador y formulario de ejercicios
 │   ├── history/      # Historial

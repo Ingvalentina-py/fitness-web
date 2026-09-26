@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router'
+import ActivityTypesPage from '../features/activities/ActivityTypesPage.jsx'
 import GuestOnly from '../features/auth/GuestOnly.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
 import RegisterPage from '../features/auth/RegisterPage.jsx'
@@ -56,6 +57,7 @@ export const router = createBrowserRouter([
           { path: '/progreso', Component: ProgressPage },
           { path: '/perfil', Component: ProfilePage },
           { path: '/perfil/ejercicios', Component: ExerciseCatalogPage },
+          { path: '/perfil/actividades', Component: ActivityTypesPage },
         ],
       },
     ],

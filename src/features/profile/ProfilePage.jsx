@@ -225,6 +225,7 @@ const CUSTOMIZATION_ITEMS = [
     tone: 'var(--color-turquoise)',
     title: 'Tipos de actividad',
     description: 'Colores e íconos de tus actividades.',
+    to: '/perfil/actividades',
   },
   {
     icon: Quote,

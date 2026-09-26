@@ -6,19 +6,19 @@ import { Reveal, Stagger } from '../../components/Reveal.jsx'
 import { formatLongDate } from '../../lib/dates.js'
 import { useQuickAdd } from '../../app/layout/useQuickAdd.js'
 import { useCurrentUser } from '../auth/useAuth.js'
-import { useSessionsByDay } from '../sessions/useSessions.js'
+import { useActivitiesByDay } from '../activities/useActivities.js'
+import TodayActivities from './TodayActivities.jsx'
 import TodayPlan from './TodayPlan.jsx'
-import TodaySessions from './TodaySessions.jsx'
 import styles from './TodayPage.module.css'
 
 export default function TodayPage() {
   const { data: user } = useCurrentUser()
   const openQuickAdd = useQuickAdd()
   // Sin `day`, la API responde con el día de hoy en la zona horaria de la persona
-  const { data: sessions = [] } = useSessionsByDay()
+  const { data: activities = [] } = useActivitiesByDay()
   const firstName = user.name.split(' ')[0]
 
-  const minutes = sessions.reduce((total, session) => total + (session.durationMinutes ?? 0), 0)
+  const minutes = activities.reduce((total, activity) => total + (activity.durationMinutes ?? 0), 0)
 
   return (
     <Stagger>
@@ -43,7 +43,7 @@ export default function TodayPage() {
               icon={Activity}
               tone="var(--color-fuchsia)"
               label="Actividades"
-              value={sessions.length}
+              value={activities.length}
             />
             <Stat icon={Timer} tone="var(--color-turquoise)" label="Minutos" value={minutes} />
             <Stat icon={Flame} tone="var(--color-yellow)" label="Días de racha" value={0} />
@@ -59,9 +59,9 @@ export default function TodayPage() {
         <TodayPlan timeZone={user.preferences.timezone} />
       </Reveal>
 
-      {sessions.length > 0 && (
+      {activities.length > 0 && (
         <Reveal>
-          <TodaySessions sessions={sessions} />
+          <TodayActivities activities={activities} />
         </Reveal>
       )}
     </Stagger>

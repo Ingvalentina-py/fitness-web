@@ -1,13 +1,3 @@
-// Colores que se pueden elegir para un grupo (paleta del plan)
-export const GROUP_COLORS = [
-  { value: '#FF2E7E', label: 'Fucsia' },
-  { value: '#FF6B2C', label: 'Naranja' },
-  { value: '#FFC928', label: 'Amarillo' },
-  { value: '#7BDC3A', label: 'Lima' },
-  { value: '#12D6C5', label: 'Turquesa' },
-  { value: '#8A84A3', label: 'Ciruela suave' },
-]
-
 // Descansos sugeridos entre series, en segundos
 export const REST_OPTIONS = [0, 30, 45, 60, 75, 90, 120, 150, 180, 240, 300]
 

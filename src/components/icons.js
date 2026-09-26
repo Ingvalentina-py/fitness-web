@@ -5,12 +5,15 @@ import {
   Flame,
   Footprints,
   HeartPulse,
+  Mountain,
   Music,
+  PersonStanding,
   Sparkles,
   Target,
   Timer,
   Trophy,
   Users,
+  Waves,
   Zap,
   createLucideIcon,
 } from 'lucide-react'
@@ -31,13 +34,16 @@ const ICONS_BY_NAME = {
   flame: { component: Flame, label: 'Llama' },
   footprints: { component: Footprints, label: 'Huellas' },
   'heart-pulse': { component: HeartPulse, label: 'Corazón' },
+  mountain: { component: Mountain, label: 'Montaña' },
   music: { component: Music, label: 'Música' },
+  'person-standing': { component: PersonStanding, label: 'Persona' },
   'roller-skate': { component: RollerSkate, label: 'Patines' },
   sparkles: { component: Sparkles, label: 'Destellos' },
   target: { component: Target, label: 'Diana' },
   timer: { component: Timer, label: 'Cronómetro' },
   trophy: { component: Trophy, label: 'Trofeo' },
   users: { component: Users, label: 'Personas' },
+  waves: { component: Waves, label: 'Olas' },
   zap: { component: Zap, label: 'Rayo' },
 }
 
@@ -54,6 +60,22 @@ export const GROUP_ICON_NAMES = [
   'activity',
   'bike',
   'music',
+  'sparkles',
+]
+
+// Íconos que se pueden elegir para un tipo de actividad
+export const ACTIVITY_ICON_NAMES = [
+  'music',
+  'users',
+  'bike',
+  'roller-skate',
+  'waves',
+  'mountain',
+  'person-standing',
+  'footprints',
+  'heart-pulse',
+  'flame',
+  'activity',
   'sparkles',
 ]
 

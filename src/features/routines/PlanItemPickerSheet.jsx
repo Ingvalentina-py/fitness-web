@@ -5,7 +5,7 @@ import Sheet from '../../components/Sheet.jsx'
 import { getIcon } from '../../components/icons.js'
 import { plural } from '../../lib/format.js'
 import { useMetaLabels } from '../../lib/useMetaLabels.js'
-import { useActivityTypes } from '../activities/useActivityTypes.js'
+import { useActivityTypes } from '../activities/useActivities.js'
 import { useRoutineGroups, useRoutineList } from './useRoutines.js'
 import styles from './PlanItemPickerSheet.module.css'
 

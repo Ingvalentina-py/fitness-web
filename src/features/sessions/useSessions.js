@@ -1,18 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { activityKeys } from '../activities/queryKeys.js'
 import { routineKeys } from '../routines/queryKeys.js'
 import { sessionKeys } from './queryKeys.js'
 import {
   createSession,
   fetchLastPerformances,
   fetchSession,
-  fetchSessionsByDay,
   saveSessionAsRoutine,
 } from './sessionsApi.js'
-
-// Sesiones de un día (sin `day`, la API responde con el día de hoy en tu zona horaria)
-export function useSessionsByDay(day) {
-  return useQuery({ queryKey: sessionKeys.day(day ?? 'hoy'), queryFn: () => fetchSessionsByDay(day) })
-}
 
 export function useSession(id) {
   return useQuery({
@@ -40,6 +35,8 @@ export function useCreateSession() {
       // La sesión ya está en la caché: la pantalla de resumen no tiene que volver a pedirla
       queryClient.setQueryData(sessionKeys.detail(session._id), session)
       queryClient.invalidateQueries({ queryKey: sessionKeys.all })
+      // La sesión también es una actividad del día (pantalla Hoy)
+      queryClient.invalidateQueries({ queryKey: activityKeys.all })
       // La rutina cambió su "última vez usada"
       queryClient.invalidateQueries({ queryKey: routineKeys.all })
       return meta
