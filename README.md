@@ -173,6 +173,11 @@ Las pantallas que no se ven al abrir se cargan cuando se visitan (`lazy` por rut
 
 Primero se despliega `fitness-api` (necesitas su dominio para el paso 2).
 
+`vercel.json` no admite comentarios (Vercel rechaza cualquier propiedad que no esté en su esquema). Sus dos reglas son:
+
+- `/api/:path*` → el dominio de la API. Por eso el navegador cree que la API vive aquí mismo.
+- `/(.*)` → `index.html`, para que React Router resuelva la dirección. Los archivos que existen (JS, CSS, fuentes) se sirven antes de llegar a esta regla.
+
 1. **Vercel → Add New → Project** e importa el repositorio `fitness-web`.
    - Framework Preset: **Vite** (lo detecta solo). Build: `npm run build`. Output: `dist`.
 2. **Edita `vercel.json`** y reemplaza `TU-API` por el dominio real de la API. Sube el cambio: cada push vuelve a desplegar.
