@@ -7,6 +7,7 @@ import {
   fetchLastPerformances,
   fetchSession,
   saveSessionAsRoutine,
+  updateSession,
 } from './sessionsApi.js'
 
 export function useSession(id) {
@@ -40,6 +41,20 @@ export function useCreateSession() {
       // La rutina cambió su "última vez usada"
       queryClient.invalidateQueries({ queryKey: routineKeys.all })
       return meta
+    },
+  })
+}
+
+// Al corregir una sesión cambian su detalle, el día en el historial y los récords
+export function useUpdateSession() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: updateSession,
+    onSuccess: (session) => {
+      queryClient.setQueryData(sessionKeys.detail(session._id), session)
+      queryClient.invalidateQueries({ queryKey: sessionKeys.all })
+      queryClient.invalidateQueries({ queryKey: activityKeys.all })
     },
   })
 }

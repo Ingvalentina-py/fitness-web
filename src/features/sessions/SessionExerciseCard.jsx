@@ -14,7 +14,16 @@ import styles from './SessionExerciseCard.module.css'
 
 // Un ejercicio dentro de la sesión: la tabla de series (repeticiones, peso y
 // "hecha"), la referencia de la vez anterior y el descanso.
-export default function SessionExerciseCard({ item, index, previous, onChange, onRemove, onSetCompleted }) {
+export default function SessionExerciseCard({
+  item,
+  index,
+  previous,
+  // Al corregir una sesión pasada no tiene sentido comparar con "la vez anterior"
+  showPrevious = true,
+  onChange,
+  onRemove,
+  onSetCompleted,
+}) {
   const labels = useMetaLabels()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showNotes, setShowNotes] = useState(Boolean(item.notes))
@@ -74,7 +83,7 @@ export default function SessionExerciseCard({ item, index, previous, onChange, o
         />
       </header>
 
-      <PreviousReference previous={previous} isUnilateral={item.isUnilateral} />
+      {showPrevious && <PreviousReference previous={previous} isUnilateral={item.isUnilateral} />}
 
       <table className={styles.table}>
         <caption className="visually-hidden">Series de {exercise.name}</caption>

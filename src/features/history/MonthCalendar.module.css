@@ -1,0 +1,89 @@
+.header {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.month {
+  font-size: var(--text-lg);
+  text-align: center;
+}
+
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.weekday {
+  padding-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.cell {
+  padding: 2px;
+  text-align: center;
+}
+
+/* Casilla de un día: número arriba y los puntos de color debajo */
+.day {
+  display: grid;
+  gap: 2px;
+  place-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-1) 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  color: var(--text);
+  background: rgb(255 255 255 / 0.45);
+  cursor: pointer;
+}
+
+.day:hover {
+  border-color: var(--primary-strong);
+}
+
+.number {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Hoy: el número resaltado sin depender solo del color */
+.today .number {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+.selected {
+  border-color: var(--primary-strong);
+  background: var(--danger-bg);
+}
+
+.dots {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  min-height: 8px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+.more {
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-muted);
+}

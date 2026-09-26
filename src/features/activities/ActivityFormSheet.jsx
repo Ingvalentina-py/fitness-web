@@ -10,71 +10,80 @@ import Sheet from '../../components/Sheet.jsx'
 import { cx } from '../../lib/cx.js'
 import { getFieldErrors } from '../../lib/formErrors.js'
 import { useMetaLabels } from '../../lib/useMetaLabels.js'
-import { useActivityTypes, useCreateActivity } from './useActivities.js'
+import { useActivityTypes, useCreateActivity, useUpdateActivity } from './useActivities.js'
 import styles from './ActivityFormSheet.module.css'
 
 // Duraciones habituales: registrar una clase de una hora debe ser un toque
 const QUICK_MINUTES = [30, 45, 60, 90]
 
-// Registrar baile, clase, bicicleta, patinaje… `initialTypeId` viene del panel "+"
-// cuando se toca directamente uno de tus tipos.
-export default function ActivityFormSheet({ initialTypeId, onClose }) {
+// Registrar o corregir baile, clase, bicicleta, patinaje…
+// `initialTypeId` viene del panel "+" cuando se toca directamente uno de tus tipos;
+// `activity` llega desde el historial cuando se está corrigiendo un registro.
+export default function ActivityFormSheet({ activity, initialTypeId, onClose }) {
   const navigate = useNavigate()
   const { meta } = useMetaLabels()
   const { data: activityTypes = [] } = useActivityTypes()
   const createActivity = useCreateActivity()
+  const updateActivity = useUpdateActivity()
+  const save = activity ? updateActivity : createActivity
 
-  const [activityType, setActivityType] = useState(initialTypeId ?? '')
-  const [day, setDay] = useState(todayInput)
-  const [durationMinutes, setDurationMinutes] = useState('')
-  const [intensity, setIntensity] = useState('')
-  const [distanceKm, setDistanceKm] = useState('')
-  const [notes, setNotes] = useState('')
+  const [activityType, setActivityType] = useState(
+    activity?.activityType?._id ?? initialTypeId ?? '',
+  )
+  const [day, setDay] = useState(activity?.day ?? todayInput)
+  const [durationMinutes, setDurationMinutes] = useState(
+    activity ? String(activity.durationMinutes ?? '') : '',
+  )
+  const [intensity, setIntensity] = useState(activity?.intensity ?? '')
+  const [distanceKm, setDistanceKm] = useState(
+    activity?.distanceKm != null ? String(activity.distanceKm) : '',
+  )
+  const [notes, setNotes] = useState(activity?.notes ?? '')
 
   const selectedType = activityTypes.find((type) => type._id === activityType)
-  const fieldErrors = getFieldErrors(createActivity.error)
+  const fieldErrors = getFieldErrors(save.error)
 
   function handleSubmit(event) {
     event.preventDefault()
-    createActivity.mutate(
-      {
-        activityType,
-        date: toDate(day),
-        durationMinutes: Number(durationMinutes),
-        ...(intensity && { intensity }),
-        ...(selectedType?.usesDistance && distanceKm !== '' && { distanceKm: Number(distanceKm) }),
-        ...(notes.trim() && { notes: notes.trim() }),
+    const values = {
+      activityType,
+      // Al corregir, el día solo se reenvía si cambió: así no se mueve la hora original
+      ...((!activity || day !== activity.day) && { date: toDate(day) }),
+      durationMinutes: Number(durationMinutes),
+      ...(intensity && { intensity }),
+      ...(selectedType?.usesDistance && distanceKm !== '' && { distanceKm: Number(distanceKm) }),
+      ...(notes.trim() && { notes: notes.trim() }),
+    }
+
+    save.mutate(activity ? { id: activity._id, ...values } : values, {
+      onSuccess: () => {
+        onClose()
+        // Al registrar, Hoy confirma que quedó guardado; al corregir se vuelve donde estabas
+        if (!activity) navigate('/')
       },
-      {
-        onSuccess: () => {
-          onClose()
-          // Hoy muestra el registro recién hecho: es la confirmación de que quedó guardado
-          navigate('/')
-        },
-      },
-    )
+    })
   }
 
   return (
     <Sheet
       open
       onClose={onClose}
-      title="Registrar actividad"
+      title={activity ? 'Corregir actividad' : 'Registrar actividad'}
       footer={
         <Button
           type="submit"
           form="activity-form"
           size="lg"
           icon={Save}
-          disabled={createActivity.isPending || !activityType || durationMinutes === ''}
+          disabled={save.isPending || !activityType || durationMinutes === ''}
         >
-          {createActivity.isPending ? 'Guardando…' : 'Guardar actividad'}
+          {save.isPending ? 'Guardando…' : 'Guardar actividad'}
         </Button>
       }
     >
       <form id="activity-form" className={styles.form} onSubmit={handleSubmit}>
-        {createActivity.isError && (
-          <Alert>{fieldErrors[''] ?? fieldErrors.activityType ?? createActivity.error.message}</Alert>
+        {save.isError && (
+          <Alert>{fieldErrors[''] ?? fieldErrors.activityType ?? save.error.message}</Alert>
         )}
 
         <fieldset className={styles.fieldset}>

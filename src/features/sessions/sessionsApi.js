@@ -11,5 +11,9 @@ export const fetchLastPerformances = (exerciseIds) =>
 // Devuelve la sesión y, en meta.records, los récords superados
 export const createSession = (session) => apiFetch('/sessions', { method: 'POST', body: session })
 
+// Corrige una sesión ya guardada (mismos campos que al crearla)
+export const updateSession = ({ id, ...changes }) =>
+  dataOf(apiFetch(`/sessions/${id}`, { method: 'PATCH', body: changes }))
+
 export const saveSessionAsRoutine = ({ sessionId, ...body }) =>
   dataOf(apiFetch(`/sessions/${sessionId}/routine`, { method: 'POST', body }))

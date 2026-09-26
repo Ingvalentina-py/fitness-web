@@ -1,0 +1,53 @@
+.title {
+  font-size: var(--text-xl);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: rgb(255 255 255 / 0.55);
+}
+
+.icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  color: var(--text);
+  background: var(--tone);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.name {
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.details {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.notes {
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}

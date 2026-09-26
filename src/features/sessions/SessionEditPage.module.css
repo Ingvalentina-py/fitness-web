@@ -1,0 +1,44 @@
+.sectionTitle {
+  font-size: var(--text-xl);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.volume {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  background: rgb(255 255 255 / 0.55);
+}
+
+/* Igual que en el editor de rutinas: guardar siempre queda a mano */
+.saveBar {
+  position: sticky;
+  bottom: calc(var(--bottom-nav-height) + var(--space-6) + env(safe-area-inset-bottom));
+  z-index: 5;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+.hint {
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .saveBar {
+    bottom: var(--space-6);
+  }
+}

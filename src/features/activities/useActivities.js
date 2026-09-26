@@ -5,8 +5,11 @@ import {
   archiveActivityType,
   createActivity,
   createActivityType,
+  deleteActivity,
   fetchActivitiesByDay,
+  fetchActivitiesInRange,
   fetchActivityTypes,
+  updateActivity,
   updateActivityType,
 } from './activitiesApi.js'
 
@@ -21,13 +24,35 @@ export function useActivitiesByDay(day) {
   })
 }
 
-export function useCreateActivity() {
+// Un rango de días: el mes que muestra el calendario del historial
+export function useActivitiesInRange({ from, to }) {
+  return useQuery({
+    queryKey: activityKeys.range(from, to),
+    queryFn: () => fetchActivitiesInRange({ from, to }),
+  })
+}
+
+// Registrar, corregir o borrar cambia el día, el calendario y (si era una sesión)
+// las estadísticas: se refresca todo lo de actividades.
+function useRefreshActivities() {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: createActivity,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: activityKeys.all }),
-  })
+  return () => queryClient.invalidateQueries({ queryKey: activityKeys.all })
+}
+
+export function useCreateActivity() {
+  const refresh = useRefreshActivities()
+  return useMutation({ mutationFn: createActivity, onSuccess: refresh })
+}
+
+export function useUpdateActivity() {
+  const refresh = useRefreshActivities()
+  return useMutation({ mutationFn: updateActivity, onSuccess: refresh })
+}
+
+export function useDeleteActivity() {
+  const refresh = useRefreshActivities()
+  return useMutation({ mutationFn: deleteActivity, onSuccess: refresh })
 }
 
 // ── Tipos de actividad ──

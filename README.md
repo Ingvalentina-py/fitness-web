@@ -97,7 +97,8 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 | `/rutinas/plan` | Con sesión | Editar el plan semanal (se guarda al instante)     |
 | `/sesion`    | Con sesión | Sesión de gimnasio en curso (`?rutina=<id>` la empieza desde una rutina; `?nueva=1`, desde cero) |
 | `/sesion/:sessionId/resumen` | Con sesión | Resumen y celebración al terminar        |
-| `/historial` | Con sesión | Calendario (vacía hasta la Fase 7)                    |
+| `/sesion/:sessionId/editar` | Con sesión | Corregir una sesión guardada, series incluidas |
+| `/historial` | Con sesión | Calendario del mes y detalle del día (`?dia=AAAA-MM-DD`) |
 | `/progreso`  | Con sesión | Estadísticas y récords (vacía hasta la Fase 8)        |
 | `/perfil`    | Con sesión | Nombre, preferencias, contraseña y cerrar sesión      |
 | `/perfil/ejercicios` | Con sesión | Catálogo: buscar, filtrar y crear ejercicios propios |
@@ -131,6 +132,14 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 - **Hoy muestra el día completo.** `GET /activities?day=` trae gimnasio y otras actividades juntas, y la pantalla Hoy las lista en una sola sección con el color de cada tipo.
 - **Tus tipos** se crean y editan en `/perfil/actividades` con el mismo selector de color e ícono de los grupos de rutinas. Los del sistema se ven pero no se tocan; los propios se archivan con confirmación.
 
+## Historial
+
+- **Calendario en texto, no en fechas.** Los días se manejan como `"AAAA-MM-DD"` (`lib/calendar.js`): comparar y ordenar esos textos equivale a comparar fechas, y no hay horas ni zonas horarias que puedan correr un día. La rejilla se arma en UTC solo para saber en qué día de la semana cae cada fecha.
+- **Empieza donde tú empiezas la semana.** Las columnas siguen tu preferencia (`weekStartsOn`), y cada día lleva un punto por actividad con su color.
+- **El día elegido vive en la URL** (`/historial?dia=2026-09-23`), así que se puede volver a él o compartirlo; al cambiar de mes, el detalle acompaña.
+- **Corregir.** Las actividades se editan en el mismo formulario con el que se registran; las sesiones tienen su pantalla (`/sesion/:id/editar`), que reutiliza la tabla de series de la sesión en curso pero sin temporizador ni "la vez anterior", porque ahí no aplica.
+- **Ojo con `useBlocker`.** El aviso de "cambios sin guardar" se apaga con una referencia (`useRef`) y no con el estado de la mutación: al guardar, la navegación ocurre antes de que el componente se vuelva a dibujar.
+
 ## Guardas de sesión
 
 `RequireAuth` envía a `/ingresar` si no hay sesión y recuerda a dónde querías ir. `GuestOnly` saca de `/ingresar` y `/registro` a quien ya inició sesión. Si cualquier petición responde `401` (sesión vencida), la app lo detecta en `app/queryClient.js` y vuelve a pedir inicio de sesión.
@@ -149,7 +158,7 @@ src/
 │   ├── activities/   # Registrar actividades y gestionar sus tipos
 │   ├── auth/         # Sesión, guardas de rutas, inicio de sesión y registro
 │   ├── exercises/    # Catálogo, buscador y formulario de ejercicios
-│   ├── history/      # Historial
+│   ├── history/      # Calendario del mes y detalle del día
 │   ├── profile/      # Perfil y preferencias
 │   ├── progress/     # Progreso
 │   ├── routines/     # Grupos, rutinas, editor y plan semanal
