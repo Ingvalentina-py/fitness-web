@@ -14,7 +14,7 @@
   font-size: var(--text-sm);
   font-weight: 800;
   color: var(--text);
-  background: var(--color-yellow);
+  background: var(--accent-award);
 }
 
 .titles {
@@ -155,9 +155,9 @@
 }
 
 .checked {
-  border-color: var(--color-lime);
+  border-color: var(--accent-done);
   color: var(--text);
-  background: var(--color-lime);
+  background: var(--accent-done);
 }
 
 .removeCell {

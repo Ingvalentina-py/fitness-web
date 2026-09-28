@@ -15,7 +15,7 @@ export function activityLook(activity) {
   }
 
   return {
-    color: activity.activityType?.color ?? 'var(--color-orange)',
+    color: activity.activityType?.color ?? 'var(--accent-energy)',
     Icon: getIcon(activity.activityType?.icon),
     name: activity.activityType?.name ?? 'Actividad',
   }

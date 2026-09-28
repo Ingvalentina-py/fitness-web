@@ -19,7 +19,7 @@
   left: -26vmax;
   width: 78vmax;
   height: 78vmax;
-  background: radial-gradient(closest-side, rgb(255 46 126 / 0.48), rgb(255 46 126 / 0));
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-main) 48%, transparent), transparent);
 }
 
 .orange {
@@ -27,7 +27,7 @@
   right: -34vmax;
   width: 64vmax;
   height: 64vmax;
-  background: radial-gradient(closest-side, rgb(255 107 44 / 0.4), rgb(255 107 44 / 0));
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-energy) 40%, transparent), transparent);
   animation-name: drift-b;
   animation-duration: 38s;
 }
@@ -37,7 +37,7 @@
   left: -18vmax;
   width: 72vmax;
   height: 72vmax;
-  background: radial-gradient(closest-side, rgb(18 214 197 / 0.4), rgb(18 214 197 / 0));
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-calm) 40%, transparent), transparent);
   animation-name: drift-c;
   animation-duration: 44s;
 }
@@ -47,7 +47,7 @@
   bottom: -12vmax;
   width: 46vmax;
   height: 46vmax;
-  background: radial-gradient(closest-side, rgb(255 201 40 / 0.36), rgb(255 201 40 / 0));
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-award) 36%, transparent), transparent);
   animation-duration: 35s;
   animation-direction: alternate-reverse;
 }

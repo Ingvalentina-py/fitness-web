@@ -3,10 +3,10 @@ import GlassCard from './GlassCard.jsx'
 import styles from './EmptyState.module.css'
 
 // Pantalla o sección vacía que invita a actuar ("Crea tu primera rutina").
-// color: fuchsia | orange | turquoise | yellow | lime
+// color: main | energy | calm | award | done (los acentos del tema, ver tokens.css)
 export default function EmptyState({
   icon: Icon,
-  color = 'fuchsia',
+  color = 'main',
   title,
   titleAs: Title = 'h2',
   description,

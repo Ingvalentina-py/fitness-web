@@ -17,24 +17,24 @@
   box-shadow: 0 14px 28px -12px var(--tone);
 }
 
-.fuchsia {
-  --tone: var(--color-fuchsia);
+.main {
+  --tone: var(--accent-main);
 }
 
-.orange {
-  --tone: var(--color-orange);
+.energy {
+  --tone: var(--accent-energy);
 }
 
-.turquoise {
-  --tone: var(--color-turquoise);
+.calm {
+  --tone: var(--accent-calm);
 }
 
-.yellow {
-  --tone: var(--color-yellow);
+.award {
+  --tone: var(--accent-award);
 }
 
-.lime {
-  --tone: var(--color-lime);
+.done {
+  --tone: var(--accent-done);
 }
 
 .title {

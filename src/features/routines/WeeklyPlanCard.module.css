@@ -32,7 +32,7 @@
 }
 
 .today {
-  background: color-mix(in srgb, var(--color-yellow) 18%, transparent);
+  background: color-mix(in srgb, var(--accent-award) 18%, transparent);
 }
 
 .dayName {

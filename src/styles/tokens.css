@@ -2,24 +2,13 @@
    Para cambiar la paleta o el estilo de toda la app, se cambia este archivo. */
 
 :root {
-  /* ── Paleta (plan, sección 7.2) ── */
+  /* ── Base: no cambia con el tema ── */
   --color-cloud: #f7f8fc;
   --color-ink: #1c1633;
-  --color-fuchsia: #ff2e7e;
-  --color-orange: #ff6b2c;
-  --color-turquoise: #12d6c5;
-  --color-yellow: #ffc928;
-  --color-lime: #7bdc3a;
 
-  /* Variantes oscuras para TEXTO sobre fondos claros (contraste ≥ 4.8:1).
-     Los colores vivos solo llegan a 1.5–3.3:1 sobre Nube: sirven para fondos,
-     íconos decorativos y gráficas, nunca para texto. La tinta sí se lee sobre
-     cualquier color vivo (≥ 4.9:1). */
-  --color-fuchsia-strong: #d1105e;
-  --color-orange-strong: #c2410c;
-  --color-turquoise-strong: #0b7a72;
-  --color-yellow-strong: #8a6400;
-  --color-lime-strong: #3d7a12;
+  /* Los cinco acentos del tema (--accent-main, -energy, -calm, -award, -done,
+     cada uno con su variante -strong) se definen en themes.css: ahí está tanto el
+     tema por defecto como los demás. Aquí solo se usan. */
 
   /* ── Roles: los componentes usan estos nombres, no la paleta directa ── */
   --bg: var(--color-cloud);
@@ -28,24 +17,24 @@
   /* --text-muted y --primary-strong como texto: solo dentro de superficies de vidrio o blancas */
   --text-muted: #5b5670;
   --border: rgb(28 22 51 / 0.12);
-  --primary: var(--color-fuchsia);
-  --primary-strong: var(--color-fuchsia-strong);
+  --primary: var(--accent-main);
+  --primary-strong: var(--accent-main-strong);
   --primary-gradient: linear-gradient(
     135deg,
-    var(--color-fuchsia-strong),
-    var(--color-orange-strong)
+    var(--accent-main-strong),
+    var(--accent-energy-strong)
   );
   --on-primary: #ffffff;
-  --focus-ring-color: rgb(209 16 94 / 0.65);
+  --focus-ring-color: color-mix(in srgb, var(--accent-main-strong) 65%, transparent);
   --danger: #b00d4f;
   --danger-bg: #ffe3ee;
-  --success: var(--color-lime-strong);
+  --success: var(--accent-done-strong);
   --success-bg: #e6f8d8;
   --warning: #6b4e00;
   --warning-bg: #fff3c4;
 
   /* Color fijo del gimnasio. Los tipos de actividad traen su color desde la API. */
-  --activity-gym: var(--color-fuchsia);
+  --activity-gym: var(--accent-main);
 
   /* ── Vidrio (glassmorphism) ── */
   --glass-bg: rgb(255 255 255 / 0.6);
@@ -55,7 +44,7 @@
   --glass-border: rgb(255 255 255 / 0.75);
   --glass-blur: blur(18px) saturate(160%);
   /* Sombra suave teñida de fucsia */
-  --glass-shadow: 0 12px 32px -14px rgb(209 16 94 / 0.28), 0 2px 6px rgb(28 22 51 / 0.05);
+  --glass-shadow: 0 12px 32px -14px color-mix(in srgb, var(--accent-main-strong) 28%, transparent), 0 2px 6px rgb(28 22 51 / 0.05);
 
   /* ── Tipografía: Archivo, una sola familia ── */
   --font-family: 'Archivo Variable', system-ui, sans-serif;

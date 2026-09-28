@@ -51,7 +51,7 @@
   inset: 2px 4px;
   z-index: -1;
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--color-fuchsia) 18%, transparent);
+  background: color-mix(in srgb, var(--accent-main) 18%, transparent);
 }
 
 .label {
@@ -77,7 +77,7 @@
   border-radius: 50%;
   color: var(--on-primary);
   background: var(--primary-gradient);
-  box-shadow: 0 14px 26px -10px rgb(209 16 94 / 0.75);
+  box-shadow: 0 14px 26px -10px color-mix(in srgb, var(--accent-main-strong) 75%, transparent);
   cursor: pointer;
   transition: transform var(--duration-fast) var(--ease-out);
 }

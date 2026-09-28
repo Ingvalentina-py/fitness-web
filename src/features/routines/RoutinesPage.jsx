@@ -107,7 +107,7 @@ export default function RoutinesPage() {
         <Reveal>
           <EmptyState
             icon={FolderPlus}
-            color="orange"
+            color="energy"
             title="Crea tu primer grupo"
             description="Los grupos son carpetas para ordenar tus rutinas, por ejemplo Tren inferior o Cardio y clases."
             action={
@@ -143,7 +143,7 @@ function FirstRoutineEmptyState() {
   return (
     <EmptyState
       icon={Dumbbell}
-      color="fuchsia"
+      color="main"
       title="Crea tu primera rutina"
       description="Arma una desde cero o empieza con la división sugerida: 4 rutinas (inferior y superior, fuerza e hipertrofia) y un plan semanal listo para editar."
       action={

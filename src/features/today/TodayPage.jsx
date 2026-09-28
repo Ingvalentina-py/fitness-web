@@ -56,12 +56,12 @@ export default function TodayPage() {
           <dl className={styles.stats}>
             <Stat
               icon={Activity}
-              tone="var(--color-fuchsia)"
+              tone="var(--accent-main)"
               label="Actividades"
               value={activities.length}
             />
-            <Stat icon={Timer} tone="var(--color-turquoise)" label="Minutos" value={minutes} />
-            <Stat icon={Flame} tone="var(--color-yellow)" label="Días de racha" value={streak} />
+            <Stat icon={Timer} tone="var(--accent-calm)" label="Minutos" value={minutes} />
+            <Stat icon={Flame} tone="var(--accent-award)" label="Días de racha" value={streak} />
           </dl>
 
           <Button icon={Plus} size="lg" fullWidth onClick={openQuickAdd}>

@@ -56,7 +56,7 @@
 }
 
 .target:focus-visible {
-  fill: rgb(209 16 94 / 0.08);
+  fill: color-mix(in srgb, var(--accent-main-strong) 8%, transparent);
   outline: none;
 }
 

@@ -76,7 +76,7 @@
 
 /* Subrayado grueso de marca detrás de la palabra (decorativo, el texto sigue en tinta) */
 .highlight {
-  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--color-yellow) 85%, transparent) 62%);
+  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent-award) 85%, transparent) 62%);
 }
 
 .heroText {

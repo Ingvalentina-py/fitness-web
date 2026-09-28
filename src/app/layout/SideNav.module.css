@@ -60,7 +60,7 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: color-mix(in srgb, var(--color-fuchsia) 18%, transparent);
+  background: color-mix(in srgb, var(--accent-main) 18%, transparent);
 }
 
 .profile {
@@ -76,7 +76,7 @@
 
 .profile:hover,
 .profile[aria-current='page'] {
-  background: color-mix(in srgb, var(--color-fuchsia) 12%, transparent);
+  background: color-mix(in srgb, var(--accent-main) 12%, transparent);
 }
 
 .profileText {

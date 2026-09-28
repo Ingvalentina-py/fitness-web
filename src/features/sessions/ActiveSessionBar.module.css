@@ -36,7 +36,7 @@
   height: 34px;
   border-radius: 12px;
   color: var(--text);
-  background: var(--color-fuchsia);
+  background: var(--accent-main);
 }
 
 .text {

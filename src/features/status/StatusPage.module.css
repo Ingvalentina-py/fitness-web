@@ -34,17 +34,17 @@
 }
 
 .up {
-  background: var(--color-lime);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-lime) 30%, transparent);
+  background: var(--accent-done);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-done) 30%, transparent);
 }
 
 .down {
-  background: var(--color-fuchsia);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-fuchsia) 30%, transparent);
+  background: var(--accent-main);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-main) 30%, transparent);
 }
 
 .checking {
-  background: var(--color-yellow);
+  background: var(--accent-award);
 }
 
 .label {

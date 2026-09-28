@@ -6,7 +6,7 @@
 
 .mark {
   flex-shrink: 0;
-  filter: drop-shadow(0 6px 12px rgb(255 46 126 / 0.35));
+  filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--accent-main) 35%, transparent));
 }
 
 .name {

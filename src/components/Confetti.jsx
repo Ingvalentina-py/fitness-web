@@ -2,11 +2,11 @@ import { motion, useReducedMotion } from 'motion/react'
 import styles from './Confetti.module.css'
 
 const COLORS = [
-  'var(--color-fuchsia)',
-  'var(--color-orange)',
-  'var(--color-turquoise)',
-  'var(--color-yellow)',
-  'var(--color-lime)',
+  'var(--accent-main)',
+  'var(--accent-energy)',
+  'var(--accent-calm)',
+  'var(--accent-award)',
+  'var(--accent-done)',
 ]
 
 // Papelitos con posición, giro y retraso fijos: se calculan una sola vez al cargar

@@ -34,7 +34,7 @@ export default function DayDetail({ day, activities }) {
       {activities.length === 0 ? (
         <EmptyState
           icon={CalendarPlus}
-          color="orange"
+          color="energy"
           title="Ese día no registraste nada"
           titleAs="h3"
           description="Si se te pasó anotarlo, todavía estás a tiempo: al registrar puedes elegir el día."

@@ -12,6 +12,7 @@ import Switch from '../../components/Switch.jsx'
 import { getFieldErrors } from '../../lib/formErrors.js'
 import { useMeta } from '../../lib/useMeta.js'
 import { useCurrentUser, useLogout } from '../auth/useAuth.js'
+import ThemePicker from './ThemePicker.jsx'
 import { useChangePassword, useUpdateProfile } from './useProfile.js'
 import styles from './ProfilePage.module.css'
 
@@ -30,6 +31,12 @@ export default function ProfilePage() {
         {isError && <Alert>No pudimos cargar las opciones. Recarga la página.</Alert>}
         {meta && <ProfileForm user={user} meta={meta} />}
       </Reveal>
+
+      {meta && (
+        <Reveal>
+          <ThemePicker user={user} themes={meta.themes} />
+        </Reveal>
+      )}
 
       <Reveal>
         <PasswordForm />
@@ -215,21 +222,21 @@ function PasswordForm() {
 const CUSTOMIZATION_ITEMS = [
   {
     icon: ListChecks,
-    tone: 'var(--color-fuchsia)',
+    tone: 'var(--accent-main)',
     title: 'Catálogo de ejercicios',
     description: 'Busca y crea tus propios ejercicios.',
     to: '/perfil/ejercicios',
   },
   {
     icon: Palette,
-    tone: 'var(--color-turquoise)',
+    tone: 'var(--accent-calm)',
     title: 'Tipos de actividad',
     description: 'Colores e íconos de tus actividades.',
     to: '/perfil/actividades',
   },
   {
     icon: Quote,
-    tone: 'var(--color-yellow)',
+    tone: 'var(--accent-award)',
     title: 'Mis frases',
     description: 'Tus frases motivacionales.',
     to: '/perfil/frases',

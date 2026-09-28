@@ -60,7 +60,7 @@
   align-items: center;
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  background: rgb(255 201 40 / 0.3);
+  background: color-mix(in srgb, var(--accent-award) 30%, transparent);
 }
 
 .recordIcon {
@@ -71,17 +71,17 @@
   height: 36px;
   border-radius: 50%;
   color: var(--text);
-  background: var(--color-yellow);
+  background: var(--accent-award);
   animation: pulse 2s var(--ease-out) infinite;
 }
 
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgb(255 201 40 / 0.7);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-award) 70%, transparent);
   }
   60% {
-    box-shadow: 0 0 0 10px rgb(255 201 40 / 0);
+    box-shadow: 0 0 0 10px transparent;
   }
 }
 
@@ -149,7 +149,7 @@
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
   font-weight: 600;
-  background: rgb(18 214 197 / 0.22);
+  background: color-mix(in srgb, var(--accent-calm) 22%, transparent);
 }
 
 .notes {

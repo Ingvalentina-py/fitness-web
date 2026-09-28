@@ -21,11 +21,13 @@ import styles from './StyleGuidePage.module.css'
 const COLORS = [
   { name: 'Nube', token: '--color-cloud', use: 'Fondo base' },
   { name: 'Tinta ciruela', token: '--color-ink', use: 'Texto principal', dark: true },
-  { name: 'Fucsia pulso', token: '--color-fuchsia', strong: '--color-fuchsia-strong', use: 'Principal · gimnasio' },
-  { name: 'Naranja impulso', token: '--color-orange', strong: '--color-orange-strong', use: 'Energía · baile' },
-  { name: 'Turquesa eléctrico', token: '--color-turquoise', strong: '--color-turquoise-strong', use: 'Acento · bicicleta · gráficas' },
-  { name: 'Amarillo meta', token: '--color-yellow', strong: '--color-yellow-strong', use: 'Logros · rachas · clases' },
-  { name: 'Lima', token: '--color-lime', strong: '--color-lime-strong', use: 'Patinaje · completado' },
+  // Los acentos se nombran por su papel, no por su color: el tema elegido decide
+  // qué color tiene cada uno (ver styles/themes.css)
+  { name: 'Principal', token: '--accent-main', strong: '--accent-main-strong', use: 'Botones · gimnasio' },
+  { name: 'Energía', token: '--accent-energy', strong: '--accent-energy-strong', use: 'Secundario · baile' },
+  { name: 'Tranquilo', token: '--accent-calm', strong: '--accent-calm-strong', use: 'Bicicleta · gráficas' },
+  { name: 'Logro', token: '--accent-award', strong: '--accent-award-strong', use: 'Rachas · récords · clases' },
+  { name: 'Completado', token: '--accent-done', strong: '--accent-done-strong', use: 'Patinaje · series hechas' },
 ]
 
 // Mismos colores e íconos que los tipos de actividad del seed
@@ -154,7 +156,7 @@ export default function StyleGuidePage() {
         <Reveal>
           <EmptyState
             icon={Sparkles}
-            color="lime"
+            color="done"
             title="Pantalla vacía que invita a actuar"
             description="Un ícono con color, un título claro, una explicación corta y una acción."
             action={<Button icon={Plus}>Crear la primera</Button>}

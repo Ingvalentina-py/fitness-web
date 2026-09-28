@@ -82,19 +82,19 @@ export default function ProgressPage() {
               <dl className={styles.stats}>
                 <Stat
                   icon={TrendingUp}
-                  tone="var(--color-fuchsia)"
+                  tone="var(--accent-main)"
                   label="Días activos"
                   value={summary.data.activeDays.length}
                 />
                 <Stat
                   icon={Timer}
-                  tone="var(--color-turquoise)"
+                  tone="var(--accent-calm)"
                   label="Minutos"
                   value={formatNumber(summary.data.totals.minutes, 0)}
                 />
                 <Stat
                   icon={Trophy}
-                  tone="var(--color-yellow)"
+                  tone="var(--accent-award)"
                   label="Volumen (kg)"
                   value={formatNumber(summary.data.totals.volumeKg, 0)}
                 />

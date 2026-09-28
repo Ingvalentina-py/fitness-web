@@ -6,7 +6,7 @@ export default function PlanItemChip({ item }) {
   if (item.kind === 'routine') {
     const { group } = item.routine
     return (
-      <Chip icon={getIcon(group?.icon)} color={group?.color ?? 'var(--color-fuchsia)'}>
+      <Chip icon={getIcon(group?.icon)} color={group?.color ?? 'var(--accent-main)'}>
         {item.routine.name}
       </Chip>
     )

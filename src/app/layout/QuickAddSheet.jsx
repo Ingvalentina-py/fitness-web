@@ -21,14 +21,14 @@ export default function QuickAddSheet({ open, onClose }) {
       <div className={styles.options}>
         <Option
           icon={Dumbbell}
-          tone="var(--color-fuchsia)"
+          tone="var(--accent-main)"
           title="Sesión de gimnasio"
           description="Empieza una rutina guardada o entrena desde cero."
           onSelect={() => setIsStartOpen(true)}
         />
         <Option
           icon={Sparkles}
-          tone="var(--color-orange)"
+          tone="var(--accent-energy)"
           title="Otra actividad"
           description="Baile, clases grupales, bicicleta, patinaje…"
           onSelect={() => setActivityForm({})}

@@ -35,7 +35,7 @@
   font-size: var(--text-sm);
   font-weight: 800;
   color: var(--text);
-  background: var(--color-yellow);
+  background: var(--accent-award);
 }
 
 .titles {
@@ -106,7 +106,7 @@
 .select:focus-visible {
   border-color: var(--primary-strong);
   outline: none;
-  box-shadow: 0 0 0 4px rgb(255 46 126 / 0.22);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-main) 22%, transparent);
 }
 
 .numberInput[aria-invalid='true'] {

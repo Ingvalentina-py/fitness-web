@@ -33,7 +33,7 @@ export default function TodayPlan({ timeZone }) {
     return hasAnyPlan ? (
       <EmptyState
         icon={Moon}
-        color="turquoise"
+        color="calm"
         title="Hoy toca descanso"
         description="Tu cuerpo también progresa descansando. Si te provoca moverte, registra una actividad libre."
         action={
@@ -45,7 +45,7 @@ export default function TodayPlan({ timeZone }) {
     ) : (
       <EmptyState
         icon={CalendarDays}
-        color="turquoise"
+        color="calm"
         title="Aún no hay nada planeado para hoy"
         description="Arma tu plan semanal en Rutinas y aquí verás qué te toca cada día."
         action={
@@ -113,7 +113,7 @@ function RoutineIcon({ group }) {
   return (
     <span
       className={styles.icon}
-      style={{ '--tone': group?.color ?? 'var(--color-fuchsia)' }}
+      style={{ '--tone': group?.color ?? 'var(--accent-main)' }}
       aria-hidden="true"
     >
       <IconByName name={group?.icon} size={22} strokeWidth={2.25} />

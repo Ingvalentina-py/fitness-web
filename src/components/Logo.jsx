@@ -12,8 +12,8 @@ export default function Logo({ showName = true, size = 36 }) {
       <svg className={styles.mark} width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="var(--color-fuchsia)" />
-            <stop offset="1" stopColor="var(--color-orange)" />
+            <stop offset="0" stopColor="var(--accent-main)" />
+            <stop offset="1" stopColor="var(--accent-energy)" />
           </linearGradient>
         </defs>
         <rect width="64" height="64" rx="18" fill={`url(#${gradientId})`} />

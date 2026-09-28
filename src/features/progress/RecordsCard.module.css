@@ -20,7 +20,7 @@
   gap: var(--space-3);
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  background: rgb(255 201 40 / 0.22);
+  background: color-mix(in srgb, var(--accent-award) 22%, transparent);
 }
 
 .icon {
@@ -31,7 +31,7 @@
   height: 36px;
   border-radius: 50%;
   color: var(--text);
-  background: var(--color-yellow);
+  background: var(--accent-award);
 }
 
 .text {

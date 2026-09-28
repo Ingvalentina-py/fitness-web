@@ -1,0 +1,102 @@
+/* Temas de color. Cada uno solo redefine los cinco acentos y sus variantes
+   oscuras: el resto de la app usa los tokens por su papel (ver tokens.css), así
+   que nada más tiene que cambiar. La base blanca y la tinta son iguales en todos.
+
+   Todos los colores están calculados, no elegidos a ojo, para cumplir las dos
+   reglas de contraste del proyecto:
+     - el color vivo se usa de FONDO con texto tinta encima → ≥ 4.5:1 con #1C1633
+     - la variante "strong" se usa como TEXTO sobre blanco  → ≥ 4.5:1 con #FFFFFF
+
+   El tema por defecto se declara también en :root, para que la app tenga colores
+   aunque todavía no se haya puesto el atributo data-theme. */
+
+/* ── Pulso: el de por defecto ── */
+:root,
+[data-theme='pulse'] {
+  --accent-main: #ff2e7e;
+  --accent-energy: #ff6b2c;
+  --accent-calm: #12d6c5;
+  --accent-award: #ffc928;
+  --accent-done: #7bdc3a;
+
+  --accent-main-strong: #d1105e;
+  --accent-energy-strong: #c2410c;
+  --accent-calm-strong: #0b7a72;
+  --accent-award-strong: #8a6400;
+  --accent-done-strong: #3d7a12;
+}
+
+/* ── Violeta: morado y lila, con menta para lo completado ── */
+[data-theme='violet'] {
+  --accent-main: #bb50f1;
+  --accent-energy: #ed24b1;
+  --accent-calm: #8d6cef;
+  --accent-award: #d6a100;
+  --accent-done: #1eb885;
+
+  --accent-main-strong: #a413ec;
+  --accent-energy-strong: #db129f;
+  --accent-calm-strong: #4d19e6;
+  --accent-award-strong: #967100;
+  --accent-done-strong: #168660;
+}
+
+/* ── Océano: azules y turquesas ── */
+[data-theme='ocean'] {
+  --accent-main: #1282f3;
+  --accent-energy: #10a2c6;
+  --accent-calm: #1bbba1;
+  --accent-award: #d1a805;
+  --accent-done: #25b166;
+
+  --accent-main-strong: #0c75df;
+  --accent-energy-strong: #0d819e;
+  --accent-calm-strong: #138471;
+  --accent-award-strong: #8e7204;
+  --accent-done-strong: #1d874e;
+}
+
+/* ── Bosque: verdes ── */
+[data-theme='forest'] {
+  --accent-main: #1eb86b;
+  --accent-energy: #5cb620;
+  --accent-calm: #20b6b1;
+  --accent-award: #d19405;
+  --accent-done: #a2b620;
+
+  --accent-main-strong: #16864e;
+  --accent-energy-strong: #438417;
+  --accent-calm-strong: #178481;
+  --accent-award-strong: #9a6d04;
+  --accent-done-strong: #6e7c16;
+}
+
+/* ── Atardecer: rojos, naranjas y un morado de contrapunto ── */
+[data-theme='sunset'] {
+  --accent-main: #f33f12;
+  --accent-energy: #d17205;
+  --accent-calm: #ef3774;
+  --accent-award: #d6b200;
+  --accent-done: #a864d8;
+
+  --accent-main-strong: #dc350c;
+  --accent-energy-strong: #b36205;
+  --accent-calm-strong: #e7135a;
+  --accent-award-strong: #8c7500;
+  --accent-done-strong: #8c33cc;
+}
+
+/* ── Grafito: azules y verdes apagados, para quien quiere algo sobrio ── */
+[data-theme='graphite'] {
+  --accent-main: #6c82b7;
+  --accent-energy: #5789a2;
+  --accent-calm: #4a8c96;
+  --accent-award: #a68330;
+  --accent-done: #4d8f6e;
+
+  --accent-main-strong: #546eab;
+  --accent-energy-strong: #4f7b92;
+  --accent-calm-strong: #437f89;
+  --accent-award-strong: #90722a;
+  --accent-done-strong: #468163;
+}

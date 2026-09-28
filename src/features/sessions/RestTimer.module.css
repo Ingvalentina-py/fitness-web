@@ -7,12 +7,12 @@
   min-width: 0;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md);
-  background: rgb(18 214 197 / 0.18);
+  background: color-mix(in srgb, var(--accent-calm) 18%, transparent);
 }
 
 /* Descanso terminado: cambia a lima para avisar sin interrumpir */
 .done {
-  background: rgb(123 220 58 / 0.25);
+  background: color-mix(in srgb, var(--accent-done) 25%, transparent);
 }
 
 .text {

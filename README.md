@@ -78,6 +78,19 @@ Modo claro, luminoso y deportivo, con **vidrio** (transparencia y desenfoque) so
 
 **Guía de estilos:** en desarrollo, abre http://localhost:5173/estilos para ver colores, tipografía y componentes juntos. Esa ruta no se incluye en la versión de producción.
 
+## Temas de color
+
+La app trae **seis temas** (Pulso, Violeta, Océano, Bosque, Atardecer y Grafito) que se eligen en Perfil. Todos comparten el fondo claro y la tinta: lo que cambia son los cinco acentos.
+
+- **Los tokens se llaman por su papel, no por su color.** `--accent-main`, `--accent-energy`, `--accent-calm`, `--accent-award` y `--accent-done` (cada uno con su variante `-strong`). Por eso cambiar de tema no obliga a tocar ni un componente: un token llamado `--color-fuchsia` conteniendo morado habría envejecido mal.
+- **Un tema es solo un bloque de CSS** en `styles/themes.css`: `[data-theme='ocean'] { --accent-main: … }`. Agregar uno nuevo son doce líneas ahí y una entrada en la lista de la API.
+- **Los colores están calculados, no elegidos a ojo.** Cada uno cumple las dos reglas del proyecto: el color vivo se lee con tinta encima (≥ 4.5:1) y su variante `-strong` se lee como texto sobre blanco (≥ 4.5:1).
+- **Nada de colores escritos a mano.** Las sombras, los aros de foco y los fondos translúcidos salen del token con `color-mix()`, así siguen al tema en vez de quedarse en fucsia.
+- **Se aplica antes de dibujar.** El tema se guarda en tus preferencias (te sigue entre dispositivos) y se copia en el navegador: al abrir la app se aplica de inmediato, sin el parpadeo de ver el tema por defecto y que cambie a mitad de carga.
+- **Las muestras del selector no repiten ni un color**: cada una lleva `data-theme` y toma los colores del propio tema.
+
+Lo que **no** cambia con el tema son los colores que tú elegiste para un grupo de rutinas o un tipo de actividad: esos se guardan en la base de datos como dato tuyo, no como parte del estilo.
+
 ## Navegación
 
 - **Celular:** encabezado con la marca y tu inicial (abre el Perfil), y barra inferior de vidrio con **Hoy · Rutinas · [+] · Historial · Progreso**. El "+" abre "¿Qué vas a registrar?".
